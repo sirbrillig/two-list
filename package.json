@@ -1,0 +1,24 @@
+{
+  "title": "Material demo",
+  "devDependencies": {
+    "react-scripts": "latest"
+  },
+  "description": "https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/container/SimpleContainer.js",
+  "dependencies": {
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "4.2.1",
+    "@material-ui/styles": "4.3.3",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-spring": "8.0.27"
+  },
+  "keywords": [],
+  "name": "two-list",
+  "version": "0.0.132",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
