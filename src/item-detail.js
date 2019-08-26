@@ -1,5 +1,4 @@
 import AppBar from '@material-ui/core/AppBar';
-import Autosuggest from 'react-autosuggest';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
@@ -64,29 +63,6 @@ function PoweredByGoogle() {
         alt="Powered by Google"
       />
     </div>
-  );
-}
-
-function AddressInput({ inputRef = () => {}, ref, ...otherProps }) {
-  return (
-    <TextField
-      fullWidth
-      InputProps={{
-        inputRef: node => {
-          ref(node);
-          inputRef(node);
-        },
-      }}
-      {...otherProps}
-    />
-  );
-}
-
-function renderSuggestion(suggestion, { isHighlighted }) {
-  return (
-    <MenuItem selected={isHighlighted} component="div">
-      {suggestion.label}
-    </MenuItem>
   );
 }
 
@@ -189,7 +165,6 @@ function useAutocompleteValue({ search, service, location }) {
 }
 
 function AddressAutosuggestInput() {
-  const classes = useStyles();
   const [value, setValue] = React.useState('');
   const debouncedValue = useDebounce(value, 500);
   const google = useGoogleApi();
@@ -200,33 +175,51 @@ function AddressAutosuggestInput() {
     service,
     location,
   });
-  const getSuggestionValue = val => val.label;
+  const onChange = event => {
+    setValue(event.target.value);
+    clearSuggestions();
+  };
   return (
-    <Autosuggest
-      renderInputComponent={AddressInput}
-      suggestions={suggestions}
-      onSuggestionsFetchRequested={() => {}}
-      onSuggestionsClearRequested={clearSuggestions}
-      getSuggestionValue={getSuggestionValue}
-      renderSuggestion={renderSuggestion}
-      inputProps={{
-        id: 'item-address',
-        label: 'Address',
-        value,
-        onChange: (event, { newValue }) => setValue(newValue),
-      }}
-      renderSuggestionsContainer={options => (
-        <Paper {...options.containerProps} square>
-          {options.children}
-        </Paper>
+    <React.Fragment>
+      <TextField
+        id="item-address"
+        label="Address"
+        margin="normal"
+        fullWidth
+        value={value}
+        onChange={onChange}
+      />
+      {suggestions && (
+        <SuggestionList
+          suggestions={suggestions}
+          clearSuggestions={clearSuggestions}
+          onChange={setValue}
+        />
       )}
-      theme={{
-        container: classes.container,
-        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-        suggestionsList: classes.suggestionsList,
-        suggestion: classes.suggestion,
-      }}
-    />
+    </React.Fragment>
+  );
+}
+
+function SuggestionList({ suggestions, onChange }) {
+  return (
+    <Paper square>
+      {suggestions.map(suggestion => (
+        <SuggestionItem
+          key={suggestion.label}
+          text={suggestion.label}
+          onChange={onChange}
+        />
+      ))}
+    </Paper>
+  );
+}
+
+function SuggestionItem({ text, isHighlighted, onChange }) {
+  const onClick = () => onChange(text);
+  return (
+    <MenuItem selected={isHighlighted} component="div" onClick={onClick}>
+      {text}
+    </MenuItem>
   );
 }
 
