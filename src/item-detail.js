@@ -14,6 +14,8 @@ import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import useStyles from './style';
 
+import google from './google.png';
+
 export default function ItemDetail({ item, onClose }) {
   const classes = useStyles();
   return (
@@ -46,8 +48,22 @@ export default function ItemDetail({ item, onClose }) {
         <div>
           <AddressAutosuggestInput />
         </div>
+        <PoweredByGoogle />
       </DialogContent>
     </Dialog>
+  );
+}
+
+function PoweredByGoogle() {
+  const classes = useStyles();
+  return (
+    <div>
+      <img
+        src={google}
+        className={classes.PoweredByGoogle}
+        alt="Powered by Google"
+      />
+    </div>
   );
 }
 

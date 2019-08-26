@@ -1,60 +1,63 @@
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from '@material-ui/styles';
 const useStyles = makeStyles(() => ({
   root: {
-    width: "320px",
-    padding: "0",
-    position: "relative"
+    width: '320px',
+    padding: '0',
+    position: 'relative',
   },
   targetListBox: {
-    backgroundColor: "#6200EE !important",
-    height: "10em",
-    overflowY: "scroll",
-    color: "#fff !important"
+    backgroundColor: '#6200EE !important',
+    height: '10em',
+    overflowY: 'scroll',
+    color: '#fff !important',
   },
   targetList: {
-    padding: "0"
+    padding: '0',
   },
   sourceListBox: {
-    height: "100%"
+    height: '100%',
   },
   sourceList: {
-    height: "18em",
-    overflowY: "scroll"
+    height: '18em',
+    overflowY: 'scroll',
   },
   removeButton: {
-    color: "#fff !important"
+    color: '#fff !important',
   },
   targetListItem: {
-    borderBottom: "1px solid rgba(255, 255, 255, 0.4)",
-    backgroundClip: "padding-box"
+    borderBottom: '1px solid rgba(255, 255, 255, 0.4)',
+    backgroundClip: 'padding-box',
   },
   sourceListItem: {
-    borderBottom: "1px solid rgba(0, 0, 0, 0.14)",
-    backgroundClip: "padding-box"
+    borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
+    backgroundClip: 'padding-box',
   },
   itemDetailAppBar: {
-    position: "relative"
+    position: 'relative',
   },
   itemDetailTitle: {
-    flex: 1
+    flex: 1,
   },
   suggestion: {
-    display: "block"
+    display: 'block',
   },
   suggestionsList: {
     margin: 0,
     padding: 0,
-    listStyleType: "none"
+    listStyleType: 'none',
   },
   container: {
-    position: "relative"
+    position: 'relative',
   },
   suggestionsContainerOpen: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: 1,
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
+  PoweredByGoogle: {
+    marginTop: '1em',
+  },
 }));
 
 export default useStyles;
