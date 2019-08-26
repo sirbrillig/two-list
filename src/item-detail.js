@@ -155,26 +155,42 @@ function useCurrentGoogleLocation({ google }) {
   return location;
 }
 
+function useAutocompleteValue({ search, service, location }) {
+  const [suggestions, setSuggestions] = React.useState([]);
+  React.useEffect(() => {
+    let isSubscribed = true;
+    if (service) {
+      getSuggestionsFor({ input: search, service, location }).then(
+        suggestions => {
+          isSubscribed && setSuggestions(suggestions);
+        },
+      );
+    }
+    return () => (isSubscribed = false);
+  }, [service, search, location]);
+  const clearSuggestions = () => setSuggestions([]);
+  return { suggestions, clearSuggestions };
+}
+
 function AddressAutosuggestInput() {
   const classes = useStyles();
   const [value, setValue] = React.useState('');
+  const [search, setSearch] = React.useState();
   const debouncedValue = useDebounce(value, 500);
-  const [suggestions, setSuggestions] = React.useState([]);
   const google = useGoogleApi();
   const service = useGoogleAutocomplete({ google });
   const location = useCurrentGoogleLocation({ google });
-  const fetchSuggestions = async input => {
-    if (service) {
-      setSuggestions(await getSuggestionsFor({ input, service, location }));
-    }
-  };
-  const clearSuggestions = () => setSuggestions([]);
+  const { suggestions, clearSuggestions } = useAutocompleteValue({
+    search,
+    service,
+    location,
+  });
   const getSuggestionValue = val => val.label;
   return (
     <Autosuggest
       renderInputComponent={AddressInput}
       suggestions={suggestions}
-      onSuggestionsFetchRequested={() => fetchSuggestions(debouncedValue)}
+      onSuggestionsFetchRequested={() => setSearch(debouncedValue)}
       onSuggestionsClearRequested={clearSuggestions}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
