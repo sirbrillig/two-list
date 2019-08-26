@@ -33,10 +33,10 @@ const useStyles = makeStyles(() => ({
     backgroundClip: 'padding-box',
   },
   itemDetailAppBar: {
-    position: 'relative',
+    position: 'relative !important',
   },
   itemDetailTitle: {
-    flex: 1,
+    flex: "1 !important",
   },
   suggestion: {
     display: 'block',
