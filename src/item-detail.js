@@ -151,7 +151,7 @@ function useAutocompleteValue({ search, service, location }) {
   const [suggestions, setSuggestions] = React.useState([]);
   React.useEffect(() => {
     let isSubscribed = true;
-    if (service) {
+    if (service && search) {
       getSuggestionsFor({ input: search, service, location }).then(
         suggestions => {
           isSubscribed && setSuggestions(suggestions);
