@@ -5,6 +5,8 @@ import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
 
+import './app.css';
+
 export default function App() {
   const classes = useStyles();
   const [items] = React.useState([
