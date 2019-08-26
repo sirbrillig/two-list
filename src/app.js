@@ -1,4 +1,4 @@
-import Container from "@material-ui/core/Container";
+import Container from '@material-ui/core/Container';
 import React from 'react';
 import useStyles from './style';
 import TargetList from './target-list';
@@ -10,32 +10,30 @@ import './app.css';
 export default function App() {
   const classes = useStyles();
   const [items] = React.useState([
-    "test item 1",
-    "test item 2",
-    "test item 3",
-    "test item 4",
-    "test item 5",
-    "test item 6",
-    "test item 7",
-    "test item 8",
-    "test item 9",
-    "test item 10"
+    { label: 'test item 1', id: 1 },
+    { label: 'test item 2', id: 2 },
+    { label: 'test item 3', id: 3 },
+    { label: 'test item 4', id: 4 },
+    { label: 'test item 5', id: 5 },
+    { label: 'test item 6', id: 6 },
+    { label: 'test item 7', id: 7 },
+    { label: 'test item 8', id: 8 },
+    { label: 'test item 9', id: 9 },
+    { label: 'test item 10', id: 10 },
   ]);
   const [savedItems, setSavedItems] = React.useState([
-    "original item a",
-    "original item b",
-    "original item c",
-    "original item d",
-    "original item e"
+    { label: 'original item a', id: 101, targetItemId: 4321 },
+    { label: 'original item b', id: 102, targetItemId: 4322 },
+    { label: 'original item c', id: 103, targetItemId: 4323 },
+    { label: 'original item d', id: 104, targetItemId: 4324 },
+    { label: 'original item e', id: 105, targetItemId: 4325 },
   ]);
   const [prevSavedItems, setPrevSavedItems] = React.useState(savedItems);
   const [itemDetail, showItemDetail] = React.useState();
   const targetListRef = React.useRef();
   const sendToTarget = item => {
-    const newItems = Array.from(new Set([...savedItems, item]));
-    if (newItems.length === savedItems.length) {
-      return;
-    }
+    const targetItem = { ...item, targetItemId: uniqueId() };
+    const newItems = [...savedItems, targetItem];
     setPrevSavedItems(savedItems);
     setSavedItems(newItems);
   };
@@ -43,12 +41,14 @@ export default function App() {
     targetListRef.current &&
       savedItems.length > prevSavedItems.length &&
       targetListRef.current.scrollIntoView({
-        block: "end",
-        behavior: "smooth"
+        block: 'end',
+        behavior: 'smooth',
       });
   }, [savedItems, prevSavedItems]);
   const removeFromTarget = item =>
-    setSavedItems(savedItems.filter(it => it !== item));
+    setSavedItems(
+      savedItems.filter(it => it.targetItemId !== item.targetItemId),
+    );
   return (
     <Container className={classes.root}>
       <TargetList
@@ -63,5 +63,14 @@ export default function App() {
       />
       <ItemDetail item={itemDetail} onClose={() => showItemDetail()} />
     </Container>
+  );
+}
+
+function uniqueId() {
+  return (
+    Date.now() +
+    Math.random()
+      .toString()
+      .slice(2)
   );
 }

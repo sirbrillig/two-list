@@ -33,7 +33,7 @@ export default function ItemDetail({ item, onClose }) {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.itemDetailTitle}>
-            {item || ''}
+            {item ? item.label : ''}
           </DialogTitle>
           <Button color="inherit" onClick={onClose}>
             save
