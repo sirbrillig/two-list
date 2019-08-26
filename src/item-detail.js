@@ -191,13 +191,12 @@ function useAutocompleteValue({ search, service, location }) {
 function AddressAutosuggestInput() {
   const classes = useStyles();
   const [value, setValue] = React.useState('');
-  const [search, setSearch] = React.useState();
   const debouncedValue = useDebounce(value, 500);
   const google = useGoogleApi();
   const service = useGoogleAutocomplete({ google });
   const location = useCurrentGoogleLocation({ google });
   const { suggestions, clearSuggestions } = useAutocompleteValue({
-    search,
+    search: debouncedValue,
     service,
     location,
   });
@@ -206,7 +205,7 @@ function AddressAutosuggestInput() {
     <Autosuggest
       renderInputComponent={AddressInput}
       suggestions={suggestions}
-      onSuggestionsFetchRequested={() => setSearch(debouncedValue)}
+      onSuggestionsFetchRequested={() => {}}
       onSuggestionsClearRequested={clearSuggestions}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
