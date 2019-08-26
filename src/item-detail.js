@@ -200,27 +200,61 @@ function AddressAutosuggestInput() {
   );
 }
 
+function clamp(value, min, max) {
+  if (value < min) {
+    return min;
+  }
+  if (max && value > max) {
+    return max;
+  }
+  return value;
+}
+
 function SuggestionList({ suggestions, onChange }) {
+  const [highlighted, setHighlighted] = React.useState(0);
+  const moveDown = () =>
+    setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1));
+  const moveUp = () => setHighlighted(prev => clamp(prev - 1, 0));
+  const chooseCurrent = React.useCallback(
+    () => suggestions[highlighted] && onChange(suggestions[highlighted].label),
+    [suggestions, highlighted, onChange],
+  );
+  useKeyCode(40, moveDown); // down
+  useKeyCode(38, moveUp); // up
+  useKeyCode(13, chooseCurrent); // enter
   return (
     <Paper square>
-      {suggestions.map(suggestion => (
+      {suggestions.map((suggestion, index) => (
         <SuggestionItem
-          key={suggestion.label}
-          text={suggestion.label}
+          key={index}
+          suggestion={suggestion}
           onChange={onChange}
+          isHighlighted={highlighted === index}
         />
       ))}
     </Paper>
   );
 }
 
-function SuggestionItem({ text, isHighlighted, onChange }) {
-  const onClick = () => onChange(text);
+function SuggestionItem({ suggestion, isHighlighted, onChange }) {
+  const onClick = () => onChange(suggestion.label);
   return (
     <MenuItem selected={isHighlighted} component="div" onClick={onClick}>
-      {text}
+      {suggestion.label}
     </MenuItem>
   );
+}
+
+function useKeyCode(code, callback) {
+  React.useEffect(() => {
+    const downHandler = event => {
+      if (event.keyCode === code) {
+        callback();
+      }
+    };
+    window.addEventListener('keydown', downHandler);
+    return () => window.removeEventListener('keydown', downHandler);
+  }, [code, callback]);
 }
 
 const SlideTransition = React.forwardRef(function Transition(props, ref) {
