@@ -1,6 +1,10 @@
 {
   "title": "Material demo",
   "devDependencies": {
+    "eslint": "^6.2.2",
+    "eslint-config-wpcalypso": "^4.0.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-wpcalypso": "^4.1.0",
     "react-scripts": "latest"
   },
   "description": "https://github.com/mui-org/material-ui/blob/master/docs/src/pages/components/container/SimpleContainer.js",
@@ -21,5 +25,17 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

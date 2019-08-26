@@ -185,7 +185,7 @@ function ItemDetail({ item, onClose }) {
   );
 }
 
-function AddressInput({ classes, inputRef = () => {}, ref, ...otherProps }) {
+function AddressInput({ inputRef = () => {}, ref, ...otherProps }) {
   return (
     <TextField
       fullWidth
@@ -200,7 +200,7 @@ function AddressInput({ classes, inputRef = () => {}, ref, ...otherProps }) {
   );
 }
 
-function renderSuggestion(suggestion, { query, isHighlighted }) {
+function renderSuggestion(suggestion, { isHighlighted }) {
   return (
     <MenuItem selected={isHighlighted} component="div">
       {suggestion.label}
