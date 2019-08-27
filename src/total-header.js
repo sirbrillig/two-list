@@ -1,16 +1,14 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
 import useStyles from './style';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import CardHeader from '@material-ui/core/CardHeader';
 
 export default function TotalHeader({ totalDistance }) {
   const classes = useStyles();
+  const text = 'Total';
+  const subText = `${totalDistance} miles`;
   return (
     <React.Fragment>
-      <AppBar className={classes.totalHeaderAppBar}>
-        <DialogTitle className={classes.totalHeaderTitle}>Total</DialogTitle>
-        {totalDistance} miles
-      </AppBar>
+      <CardHeader classes={{ subheader: classes.totalHeaderTitle }} title={text} subheader={subText} />
     </React.Fragment>
   );
 }

@@ -6,13 +6,14 @@ const useStyles = makeStyles(() => ({
     position: 'relative',
   },
   targetListBox: {
+    height: '100%',
     backgroundColor: '#6200EE !important',
-    height: '10em',
-    overflowY: 'scroll',
     color: '#fff !important',
   },
   targetList: {
     padding: '0',
+    height: '10em',
+    overflowY: 'scroll',
   },
   sourceListBox: {
     height: '100%',
@@ -35,11 +36,6 @@ const useStyles = makeStyles(() => ({
     borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
     backgroundClip: 'padding-box',
   },
-  totalHeaderAppBar: {
-    position: 'relative !important',
-    textAlign: 'center',
-    padding: '0.5em',
-  },
   itemDetailAppBar: {
     position: 'relative !important',
   },
@@ -47,7 +43,7 @@ const useStyles = makeStyles(() => ({
     flex: "1 !important",
   },
   totalHeaderTitle: {
-    padding: '0 !important',
+    color: '#fff !important',
   },
   suggestion: {
     display: 'block',
