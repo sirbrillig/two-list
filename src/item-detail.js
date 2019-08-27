@@ -44,7 +44,7 @@ export default function ItemDetail({ item, onClose }) {
           </DialogTitle>
           <Button
             color="inherit"
-            onClick={() => onClose({ ...item, label: itemName })}>
+            onClick={() => onClose({ ...item, label: itemName, address })}>
             save
           </Button>
         </Toolbar>
