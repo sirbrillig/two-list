@@ -9,7 +9,7 @@ import './app.css';
 
 export default function App() {
   const classes = useStyles();
-  const [items] = React.useState([
+  const [items, setItems] = React.useState([
     { label: 'test item 1', id: 1 },
     { label: 'test item 2', id: 2 },
     { label: 'test item 3', id: 3 },
@@ -49,6 +49,21 @@ export default function App() {
     setSavedItems(
       savedItems.filter(it => it.targetItemId !== item.targetItemId),
     );
+  const updateItem = updatedItem => {
+    setItems(
+      items.map(it => {
+        if (it.id === updatedItem.id) {
+          return updatedItem;
+        }
+        return it;
+      }),
+    );
+  };
+  const onClose = updatedItem => {
+    showItemDetail();
+    updatedItem && updateItem(updatedItem);
+  };
+
   return (
     <Container className={classes.root}>
       <TargetList
@@ -61,7 +76,7 @@ export default function App() {
         sendToTarget={sendToTarget}
         showItemDetail={showItemDetail}
       />
-      <ItemDetail item={itemDetail} onClose={() => showItemDetail()} />
+      <ItemDetail item={itemDetail} onClose={onClose} />
     </Container>
   );
 }

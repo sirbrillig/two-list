@@ -7,7 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,7 +16,13 @@ import useStyles from './style';
 import google from './google.png';
 
 export default function ItemDetail({ item, onClose }) {
+  const [itemName, setItemName] = useState(item ? item.label : '');
+  useEffect(() => {
+    setItemName(item ? item.label : '');
+  }, [item]);
   const classes = useStyles();
+  const onChange = event => setItemName(event.target.value);
+
   return (
     <Dialog
       open={!!item}
@@ -35,14 +41,23 @@ export default function ItemDetail({ item, onClose }) {
           <DialogTitle className={classes.itemDetailTitle}>
             {item ? item.label : ''}
           </DialogTitle>
-          <Button color="inherit" onClick={onClose}>
+          <Button
+            color="inherit"
+            onClick={() => onClose({ ...item, label: itemName })}>
             save
           </Button>
         </Toolbar>
       </AppBar>
       <DialogContent>
         <div>
-          <TextField id="item-name" label="Name" margin="normal" fullWidth />
+          <TextField
+            id="item-name"
+            label="Name"
+            margin="normal"
+            fullWidth
+            value={itemName}
+            onChange={onChange}
+          />
         </div>
         <div>
           <AddressAutosuggestInput />
