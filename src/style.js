@@ -12,7 +12,7 @@ const useStyles = makeStyles(() => ({
   },
   targetList: {
     padding: '0',
-    height: '10em',
+    height: '8em',
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
   },
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     height: '100%',
   },
   sourceList: {
-    height: '18em',
+    height: '13em',
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
   },
