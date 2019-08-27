@@ -16,20 +16,32 @@ import useStyles from './style';
 import google from './google.png';
 
 export default function ItemDetail({ item, onClose }) {
-  const [itemName, setItemName] = useState(item ? item.label : '');
-  useEffect(() => {
-    setItemName(item ? item.label : '');
-  }, [item]);
-  const classes = useStyles();
-  const [address, setAddress] = React.useState('');
-  const setName = event => setItemName(event.target.value);
-
   return (
     <Dialog
       open={!!item}
       fullScreen
       onClose={onClose}
       TransitionComponent={SlideTransition}>
+      {item ? (
+        <ItemDetailContent item={item} onClose={onClose} />
+      ) : (
+        <em>Loading</em>
+      )}
+    </Dialog>
+  );
+}
+
+function ItemDetailContent({ item, onClose }) {
+  const classes = useStyles();
+  const [address, setAddress] = React.useState(item.address || '');
+  const setName = event => setItemName(event.target.value);
+  const [itemName, setItemName] = useState(item.label);
+  useEffect(() => {
+    setItemName(item.label);
+  }, [item]);
+
+  return (
+    <React.Fragment>
       <AppBar className={classes.itemDetailAppBar}>
         <Toolbar>
           <IconButton
@@ -40,7 +52,7 @@ export default function ItemDetail({ item, onClose }) {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.itemDetailTitle}>
-            {item ? item.label : ''}
+            {item.label}
           </DialogTitle>
           <Button
             color="inherit"
@@ -65,7 +77,7 @@ export default function ItemDetail({ item, onClose }) {
         </div>
         <PoweredByGoogle />
       </DialogContent>
-    </Dialog>
+    </React.Fragment>
   );
 }
 
@@ -97,7 +109,6 @@ function useDebounce(value, delay) {
 
 function getSuggestionsFor({ service, input, location }) {
   return new Promise(resolve => {
-    console.log('search is', input);
     if (!input || input.length < 4) {
       return [];
     }
@@ -166,32 +177,39 @@ function useCurrentGoogleLocation({ google }) {
 function useAutocompleteValue({ search, service, location }) {
   const [suggestions, setSuggestions] = React.useState([]);
   React.useEffect(() => {
-    let isSubscribed = true;
+    console.log('beginning search for', search);
     if (service && search) {
       getSuggestionsFor({ input: search, service, location }).then(
         suggestions => {
-          isSubscribed && setSuggestions(suggestions);
+          setSuggestions(suggestions);
         },
       );
     }
-    return () => (isSubscribed = false);
   }, [service, search, location]);
   const clearSuggestions = () => setSuggestions([]);
   return { suggestions, clearSuggestions };
 }
 
-function AddressAutosuggestInput({value, onChange}) {
+function AddressAutosuggestInput({ value, onChange }) {
   const debouncedValue = useDebounce(value, 500);
+  const [isTouched, setTouched] = useState();
   const google = useGoogleApi();
   const service = useGoogleAutocomplete({ google });
   const location = useCurrentGoogleLocation({ google });
   const { suggestions, clearSuggestions } = useAutocompleteValue({
-    search: debouncedValue,
+    // only search if typing has started
+    search: isTouched ? debouncedValue : '',
     service,
     location,
   });
   const onType = event => {
+    setTouched(true);
     onChange(event.target.value);
+    clearSuggestions();
+  };
+  const onChoose = value => {
+    onChange(value);
+    setTouched(false);
     clearSuggestions();
   };
   return (
@@ -209,7 +227,7 @@ function AddressAutosuggestInput({value, onChange}) {
         <SuggestionList
           suggestions={suggestions}
           clearSuggestions={clearSuggestions}
-          onChange={onChange}
+          onChange={onChoose}
         />
       )}
     </React.Fragment>
