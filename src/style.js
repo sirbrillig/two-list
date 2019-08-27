@@ -28,6 +28,9 @@ const useStyles = makeStyles(() => ({
     borderBottom: '1px solid rgba(255, 255, 255, 0.4)',
     backgroundClip: 'padding-box',
   },
+  targetListItemEmpty: {
+    minHeight: "2em",
+  },
   sourceListItem: {
     borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
     backgroundClip: 'padding-box',

@@ -11,7 +11,10 @@ import useStyles from './style';
 
 export default function TargetList({ items, removeFromTarget, targetListRef }) {
   const classes = useStyles();
-  const slideInTransitions = useTransition(items, item => item.targetItemId, {
+  // We pad the bottom of the list to get the remove animation to look good
+  const fakeItem = { id: 'abcdefghijklmnop', targetItemId: 'abcdefghijklmnop', label: '' };
+  const paddedItems = [...items, fakeItem];
+  const slideInTransitions = useTransition(paddedItems, item => item.targetItemId, {
     config: { clamp: true, friction: 20 },
     from: { opacity: 0, transform: 'translate3d(100%,0,0)', maxHeight: '50px' },
     enter: { opacity: 1, transform: 'translate3d(0%,0,0)', maxHeight: '50px' },
@@ -41,6 +44,13 @@ export default function TargetList({ items, removeFromTarget, targetListRef }) {
 
 function TargetListItem({ item, removeFromTarget }) {
   const classes = useStyles();
+  if (! item.label) {
+    return (
+      <ListItem className={classes.targetListItemEmpty}>
+        <ListItemText> </ListItemText>
+      </ListItem>
+      );
+  }
   return (
     <ListItem className={classes.targetListItem}>
       <ListItemText>{item.label}</ListItemText>
@@ -54,5 +64,5 @@ function TargetListItem({ item, removeFromTarget }) {
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
-  );
+    );
 }
