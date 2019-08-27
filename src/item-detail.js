@@ -25,7 +25,7 @@ export default function ItemDetail({ item, onClose }) {
       {item ? (
         <ItemDetailContent item={item} onClose={onClose} />
       ) : (
-        <em>Loading</em>
+        <ItemDetailContent item={{ label: '', id: '' }} onClose={() => {}} />
       )}
     </Dialog>
   );
@@ -33,7 +33,7 @@ export default function ItemDetail({ item, onClose }) {
 
 function ItemDetailContent({ item, onClose }) {
   const classes = useStyles();
-  const [address, setAddress] = React.useState(item.address || '');
+  const [address, setAddress] = useState(item.address || '');
   const setName = event => setItemName(event.target.value);
   const [itemName, setItemName] = useState(item.label);
   useEffect(() => {
@@ -95,9 +95,10 @@ function PoweredByGoogle() {
 }
 
 function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = React.useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(value);
   React.useEffect(() => {
     const handler = setTimeout(() => {
+      console.log('setTimeout');
       setDebouncedValue(value);
     }, delay);
     return () => {
@@ -127,12 +128,13 @@ function getSuggestionsFor({ service, input, location }) {
 }
 
 function useGoogleApi() {
-  const [google, setGoogle] = React.useState();
+  const [google, setGoogle] = useState();
   const onLoad = () => {
     if (!window.google) {
       alert('no google even after load');
       return;
     }
+    console.log('setGoogle');
     setGoogle(window.google);
   };
   React.useEffect(() => {
@@ -151,36 +153,42 @@ function useGoogleApi() {
 }
 
 function useGoogleAutocomplete({ google }) {
-  const [service, setService] = React.useState();
+  const [service, setService] = useState();
   React.useEffect(() => {
+    console.log('setService');
     google && setService(new google.maps.places.AutocompleteService());
   }, [google]);
   return service;
 }
 
 function useCurrentGoogleLocation({ google }) {
-  const [location, setLocation] = React.useState();
-  React.useEffect(() => {
+  const [location, setLocation] = useState();
+  useEffect(() => {
+    let isSubscribed = true;
     google &&
-      navigator.geolocation.getCurrentPosition(function(position) {
-        setLocation(
-          new google.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude,
-          ),
-        );
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log('setLocation');
+        isSubscribed &&
+          setLocation(
+            new google.maps.LatLng(
+              position.coords.latitude,
+              position.coords.longitude,
+            ),
+          );
       });
+    return () => (isSubscribed = false);
   }, [google]);
   return location;
 }
 
 function useAutocompleteValue({ search, service, location }) {
-  const [suggestions, setSuggestions] = React.useState([]);
-  React.useEffect(() => {
+  const [suggestions, setSuggestions] = useState([]);
+  useEffect(() => {
     console.log('beginning search for', search);
     if (service && search) {
       getSuggestionsFor({ input: search, service, location }).then(
         suggestions => {
+          console.log('I am about to set suggestions');
           setSuggestions(suggestions);
         },
       );
@@ -203,11 +211,13 @@ function AddressAutosuggestInput({ value, onChange }) {
     location,
   });
   const onType = event => {
+    console.log('onType');
     setTouched(true);
     onChange(event.target.value);
     clearSuggestions();
   };
   const onChoose = value => {
+    console.log('onChoose');
     onChange(value);
     setTouched(false);
     clearSuggestions();
@@ -245,7 +255,7 @@ function clamp(value, min, max) {
 }
 
 function SuggestionList({ suggestions, onChange }) {
-  const [highlighted, setHighlighted] = React.useState(0);
+  const [highlighted, setHighlighted] = useState(0);
   const moveDown = () =>
     setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1));
   const moveUp = () => setHighlighted(prev => clamp(prev - 1, 0));
@@ -280,7 +290,7 @@ function SuggestionItem({ suggestion, isHighlighted, onChange }) {
 }
 
 function useKeyCode(code, callback) {
-  React.useEffect(() => {
+  useEffect(() => {
     const downHandler = event => {
       if (event.keyCode === code) {
         callback();
