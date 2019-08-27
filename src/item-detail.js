@@ -21,7 +21,8 @@ export default function ItemDetail({ item, onClose }) {
     setItemName(item ? item.label : '');
   }, [item]);
   const classes = useStyles();
-  const onChange = event => setItemName(event.target.value);
+  const [address, setAddress] = React.useState('');
+  const setName = event => setItemName(event.target.value);
 
   return (
     <Dialog
@@ -56,11 +57,11 @@ export default function ItemDetail({ item, onClose }) {
             margin="normal"
             fullWidth
             value={itemName}
-            onChange={onChange}
+            onChange={setName}
           />
         </div>
         <div>
-          <AddressAutosuggestInput />
+          <AddressAutosuggestInput value={address} onChange={setAddress} />
         </div>
         <PoweredByGoogle />
       </DialogContent>
@@ -179,8 +180,7 @@ function useAutocompleteValue({ search, service, location }) {
   return { suggestions, clearSuggestions };
 }
 
-function AddressAutosuggestInput() {
-  const [value, setValue] = React.useState('');
+function AddressAutosuggestInput({value, onChange}) {
   const debouncedValue = useDebounce(value, 500);
   const google = useGoogleApi();
   const service = useGoogleAutocomplete({ google });
@@ -190,8 +190,8 @@ function AddressAutosuggestInput() {
     service,
     location,
   });
-  const onChange = event => {
-    setValue(event.target.value);
+  const onType = event => {
+    onChange(event.target.value);
     clearSuggestions();
   };
   return (
@@ -202,13 +202,14 @@ function AddressAutosuggestInput() {
         margin="normal"
         fullWidth
         value={value}
-        onChange={onChange}
+        onChange={onType}
+        autoComplete="off"
       />
       {suggestions && (
         <SuggestionList
           suggestions={suggestions}
           clearSuggestions={clearSuggestions}
-          onChange={setValue}
+          onChange={onChange}
         />
       )}
     </React.Fragment>
