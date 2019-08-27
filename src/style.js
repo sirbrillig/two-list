@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
     backgroundClip: 'padding-box',
   },
   targetListItemEmpty: {
-    minHeight: "2em",
+    minHeight: '2em',
   },
   sourceListItem: {
     borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
     position: 'relative !important',
   },
   itemDetailTitle: {
-    flex: "1 !important",
+    flex: '1 !important',
   },
   totalHeaderTitle: {
     color: '#fff !important',
@@ -64,6 +64,9 @@ const useStyles = makeStyles(() => ({
   },
   PoweredByGoogle: {
     marginTop: '1em',
+  },
+  addItemButton: {
+    fontSize: '2rem !important',
   },
 }));
 

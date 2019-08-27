@@ -8,7 +8,11 @@ export default function TotalHeader({ totalDistance }) {
   const subText = `${totalDistance} miles`;
   return (
     <React.Fragment>
-      <CardHeader classes={{ subheader: classes.totalHeaderTitle }} title={text} subheader={subText} />
+      <CardHeader
+        classes={{ subheader: classes.totalHeaderTitle }}
+        title={text}
+        subheader={subText}
+      />
     </React.Fragment>
   );
 }

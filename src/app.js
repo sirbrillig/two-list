@@ -4,6 +4,7 @@ import useStyles from './style';
 import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
+import ActionToolbar from './action-toolbar';
 
 import './app.css';
 
@@ -77,6 +78,7 @@ export default function App() {
         showItemDetail={showItemDetail}
       />
       <ItemDetail item={itemDetail} onClose={onClose} />
+      <ActionToolbar />
     </Container>
   );
 }
