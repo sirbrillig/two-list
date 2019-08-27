@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
     padding: '0',
     height: '10em',
     overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
   },
   sourceListBox: {
     height: '100%',
@@ -21,6 +22,7 @@ const useStyles = makeStyles(() => ({
   sourceList: {
     height: '18em',
     overflowY: 'scroll',
+    WebkitOverflowScrolling: 'touch',
   },
   removeButton: {
     color: '#fff !important',
