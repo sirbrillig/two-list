@@ -40,6 +40,13 @@ function ItemDetailContent({ item, onClose }) {
     setItemName(item.label);
   }, [item]);
 
+  const saveChanges = () => {
+    if (!itemName) {
+      return;
+    }
+    onClose({ ...item, label: itemName, address });
+  };
+
   return (
     <React.Fragment>
       <AppBar className={classes.itemDetailAppBar}>
@@ -52,11 +59,9 @@ function ItemDetailContent({ item, onClose }) {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.itemDetailTitle}>
-            {item.label}
+            Edit Location
           </DialogTitle>
-          <Button
-            color="inherit"
-            onClick={() => onClose({ ...item, label: itemName, address })}>
+          <Button color="inherit" onClick={saveChanges}>
             save
           </Button>
         </Toolbar>
@@ -70,6 +75,7 @@ function ItemDetailContent({ item, onClose }) {
             fullWidth
             value={itemName}
             onChange={setName}
+            error={!itemName}
           />
         </div>
         <div>
