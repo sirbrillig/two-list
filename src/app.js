@@ -31,6 +31,7 @@ export default function App() {
   ]);
   const [prevSavedItems, setPrevSavedItems] = React.useState(savedItems);
   const [itemDetail, showItemDetail] = React.useState();
+  const [isShowingAddItem, setIsShowingAddItem] = React.useState(false);
   const targetListRef = React.useRef();
   const sendToTarget = item => {
     const targetItem = { ...item, targetItemId: uniqueId() };
@@ -60,9 +61,18 @@ export default function App() {
       }),
     );
   };
-  const onClose = updatedItem => {
+  const addNewItem = newItem => {
+    newItem.id = uniqueId();
+    setItems([...items, newItem]);
+  };
+  const onClose = ({ updatedItem, newItem }) => {
     showItemDetail();
+    setIsShowingAddItem(false);
     updatedItem && updateItem(updatedItem);
+    newItem && addNewItem(newItem);
+  };
+  const createNewItem = () => {
+    setIsShowingAddItem(true);
   };
 
   return (
@@ -77,8 +87,12 @@ export default function App() {
         sendToTarget={sendToTarget}
         showItemDetail={showItemDetail}
       />
-      <ItemDetail item={itemDetail} onClose={onClose} />
-      <ActionToolbar />
+      <ItemDetail
+        item={itemDetail}
+        onClose={onClose}
+        newItem={isShowingAddItem}
+      />
+      <ActionToolbar createNewItem={createNewItem} />
     </Container>
   );
 }

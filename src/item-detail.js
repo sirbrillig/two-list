@@ -15,23 +15,27 @@ import useStyles from './style';
 
 import google from './google.png';
 
-export default function ItemDetail({ item, onClose }) {
+export default function ItemDetail({ item, onClose, newItem }) {
   return (
     <Dialog
-      open={!!item}
+      open={!!item || newItem}
       fullScreen
       onClose={onClose}
       TransitionComponent={SlideTransition}>
       {item ? (
-        <ItemDetailContent item={item} onClose={onClose} />
+        <ItemDetailContent item={item} onClose={onClose} newItem={newItem} />
       ) : (
-        <ItemDetailContent item={{ label: '', id: '' }} onClose={() => {}} />
+        <ItemDetailContent
+          item={{ label: '', id: '' }}
+          onClose={onClose}
+          newItem={newItem}
+        />
       )}
     </Dialog>
   );
 }
 
-function ItemDetailContent({ item, onClose }) {
+function ItemDetailContent({ item, onClose, newItem }) {
   const classes = useStyles();
   const [address, setAddress] = useState(item.address || '');
   const setName = event => setItemName(event.target.value);
@@ -44,7 +48,11 @@ function ItemDetailContent({ item, onClose }) {
     if (!itemName) {
       return;
     }
-    onClose({ ...item, label: itemName, address });
+    if (newItem) {
+      onClose({ newItem: { label: itemName, address } });
+      return;
+    }
+    onClose({ updatedItem: { ...item, label: itemName, address } });
   };
 
   return (
@@ -59,7 +67,7 @@ function ItemDetailContent({ item, onClose }) {
             <CloseIcon />
           </IconButton>
           <DialogTitle className={classes.itemDetailTitle}>
-            Edit Location
+            {newItem ? 'Add Location' : 'Edit Location'}
           </DialogTitle>
           <Button color="inherit" onClick={saveChanges}>
             save
