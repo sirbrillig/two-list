@@ -4,6 +4,7 @@ import useStyles from './style';
 import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
+import TotalHeader from './total-header';
 
 import './app.css';
 
@@ -66,6 +67,7 @@ export default function App() {
 
   return (
     <Container className={classes.root}>
+      <TotalHeader totalDistance={38}/>
       <TargetList
         items={savedItems}
         removeFromTarget={removeFromTarget}

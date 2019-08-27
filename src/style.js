@@ -35,11 +35,19 @@ const useStyles = makeStyles(() => ({
     borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
     backgroundClip: 'padding-box',
   },
+  totalHeaderAppBar: {
+    position: 'relative !important',
+    textAlign: 'center',
+    padding: '0.5em',
+  },
   itemDetailAppBar: {
     position: 'relative !important',
   },
   itemDetailTitle: {
     flex: "1 !important",
+  },
+  totalHeaderTitle: {
+    padding: '0 !important',
   },
   suggestion: {
     display: 'block',
