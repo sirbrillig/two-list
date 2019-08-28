@@ -75,6 +75,7 @@ export default function App() {
   const createNewItem = () => {
     setIsShowingAddItem(true);
   };
+  const clearItems = () => setSavedItems([]);
 
   return (
     <Container className={classes.root}>
@@ -93,7 +94,7 @@ export default function App() {
         onClose={onClose}
         newItem={isShowingAddItem}
       />
-      <ActionToolbar createNewItem={createNewItem} />
+      <ActionToolbar createNewItem={createNewItem} clearItems={clearItems} />
     </Container>
   );
 }
