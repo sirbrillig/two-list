@@ -1,5 +1,5 @@
 /* @format */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Card from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
@@ -81,13 +81,25 @@ function SourceListItem({
 }) {
   const classes = useStyles();
   const onClick = () => showItemDetail(item);
+  const ref = useRef();
+
+  useEffect(() => {
+    highlighted &&
+      ref.current &&
+      ref.current.scrollIntoView({
+        block: 'end',
+        behavior: 'smooth',
+      });
+  }, [highlighted]);
+
   return (
     <ListItem
       className={classes.sourceListItem}
       ContainerProps={hidden ? { className: classes.sourceListItemHidden } : {}}
       button
       selected={highlighted}
-      onClick={onClick}>
+      onClick={onClick}
+      ref={ref}>
       <ListItemText>{item.label}</ListItemText>
       <ListItemSecondaryAction>
         <IconButton

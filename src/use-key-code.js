@@ -18,7 +18,7 @@ export function clamp(value, min, max) {
   if (value < min) {
     return min;
   }
-  if (max && value > max) {
+  if (max !== null && value > max) {
     return max;
   }
   return value;
