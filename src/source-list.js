@@ -1,5 +1,5 @@
 /* @format */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
@@ -11,10 +11,39 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import useStyles from './style';
+import useKeyCode, { clamp } from './use-key-code';
 
-export default function SourceList({ items, sendToTarget, showItemDetail }) {
+export default function SourceList({
+  items,
+  sendToTarget,
+  showItemDetail,
+  active,
+}) {
   const classes = useStyles();
   const [searchValue, setSearchValue] = useState('');
+  const [highlighted, setHighlighted] = useState(0);
+  const [visibleItems, setVisibleItems] = useState(items);
+  useEffect(() => {
+    setVisibleItems(
+      items.filter(item => doesItemMatchSearch(item, searchValue)),
+    );
+  }, [items, searchValue]);
+  const moveDown = () => {
+    active &&
+      setHighlighted(prev => clamp(prev + 1, 0, visibleItems.length - 1));
+  };
+  const moveUp = () => active && setHighlighted(prev => clamp(prev - 1, 0));
+  const chooseCurrent = () => active && sendToTarget(visibleItems[highlighted]);
+  useKeyCode(40, moveDown); // down
+  useKeyCode(38, moveUp); // up
+  useKeyCode(13, chooseCurrent); // enter
+  useEffect(() => setHighlighted(0), [visibleItems]);
+
+  const highlightedItem = visibleItems.reduce(
+    (found, item, index) => (index === highlighted ? item : found),
+    { id: null },
+  );
+
   const itemElements = items.map(item => (
     <SourceListItem
       item={item}
@@ -22,6 +51,7 @@ export default function SourceList({ items, sendToTarget, showItemDetail }) {
       sendToTarget={sendToTarget}
       showItemDetail={showItemDetail}
       hidden={!doesItemMatchSearch(item, searchValue)}
+      highlighted={highlightedItem.id === item.id}
     />
   ));
   const onSearchChange = event => setSearchValue(event.target.value);
@@ -42,7 +72,13 @@ export default function SourceList({ items, sendToTarget, showItemDetail }) {
   );
 }
 
-function SourceListItem({ item, sendToTarget, showItemDetail, hidden }) {
+function SourceListItem({
+  item,
+  sendToTarget,
+  showItemDetail,
+  hidden,
+  highlighted,
+}) {
   const classes = useStyles();
   const onClick = () => showItemDetail(item);
   return (
@@ -50,6 +86,7 @@ function SourceListItem({ item, sendToTarget, showItemDetail, hidden }) {
       className={classes.sourceListItem}
       ContainerProps={hidden ? { className: classes.sourceListItemHidden } : {}}
       button
+      selected={highlighted}
       onClick={onClick}>
       <ListItemText>{item.label}</ListItemText>
       <ListItemSecondaryAction>
@@ -75,6 +112,7 @@ function SourceListSearch({ value, onChange }) {
         fullWidth
         value={value}
         onChange={onChange}
+        autoComplete="off"
       />
     </ListItem>
   );

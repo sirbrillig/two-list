@@ -13,6 +13,7 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import useStyles from './style';
+import useKeyCode, { clamp } from './use-key-code';
 
 import google from './google.png';
 
@@ -259,16 +260,6 @@ function AddressAutosuggestInput({ value, onChange }) {
   );
 }
 
-function clamp(value, min, max) {
-  if (value < min) {
-    return min;
-  }
-  if (max && value > max) {
-    return max;
-  }
-  return value;
-}
-
 function SuggestionList({ suggestions, onChange }) {
   const [highlighted, setHighlighted] = useState(0);
   const moveDown = () =>
@@ -302,18 +293,6 @@ function SuggestionItem({ suggestion, isHighlighted, onChange }) {
       {suggestion.label}
     </MenuItem>
   );
-}
-
-function useKeyCode(code, callback) {
-  useEffect(() => {
-    const downHandler = event => {
-      if (event.keyCode === code) {
-        callback();
-      }
-    };
-    window.addEventListener('keydown', downHandler);
-    return () => window.removeEventListener('keydown', downHandler);
-  }, [code, callback]);
 }
 
 const SlideTransition = React.forwardRef(function Transition(props, ref) {
