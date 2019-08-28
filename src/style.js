@@ -44,6 +44,9 @@ const useStyles = makeStyles(() => ({
     borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
     backgroundClip: 'padding-box',
   },
+  sourceListItemHidden: {
+    display: 'none !important',
+  },
   itemDetailAppBar: {
     position: 'relative !important',
   },
