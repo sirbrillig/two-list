@@ -44,7 +44,7 @@ export default function App() {
     targetListRef.current &&
       savedItems.length > prevSavedItems.length &&
       targetListRef.current.lastElementChild.scrollIntoView({
-        block: 'end',
+        block: 'start',
         behavior: 'smooth',
       });
   }, [savedItems, prevSavedItems]);

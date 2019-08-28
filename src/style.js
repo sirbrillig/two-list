@@ -4,23 +4,29 @@ const useStyles = makeStyles(() => ({
     width: '320px',
     padding: '0',
     position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '95vh',
   },
   targetListBox: {
-    height: '100%',
+    flex: 1.6,
+    display: 'flex',
+    flexDirection: 'column',
+    overflowY: 'hidden',
     backgroundColor: '#6200EE !important',
     color: '#fff !important',
   },
   targetList: {
     padding: '0',
-    height: '8em',
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
   },
   sourceListBox: {
-    height: '100%',
+    flex: 2,
+    overflowY: 'hidden',
   },
   sourceList: {
-    height: '13em',
+    height: '70%',
     overflowY: 'scroll',
     WebkitOverflowScrolling: 'touch',
   },
@@ -32,7 +38,7 @@ const useStyles = makeStyles(() => ({
     backgroundClip: 'padding-box',
   },
   targetListItemEmpty: {
-    minHeight: '2em',
+    minHeight: '0.5em',
   },
   sourceListItem: {
     borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
