@@ -10,7 +10,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
-import useStyles from './style';
 import useKeyCode, { clamp } from './use-key-code';
 
 export default function SourceList({
@@ -18,8 +17,8 @@ export default function SourceList({
   sendToTarget,
   showItemDetail,
   active,
+  classes,
 }) {
-  const classes = useStyles();
   const [searchValue, setSearchValue] = useState('');
   const [highlighted, setHighlighted] = useState(0);
   const [visibleItems, setVisibleItems] = useState(items);
@@ -52,6 +51,7 @@ export default function SourceList({
       showItemDetail={showItemDetail}
       hidden={!doesItemMatchSearch(item, searchValue)}
       highlighted={highlightedItem.id === item.id}
+      classes={classes}
     />
   ));
   const onSearchChange = event => setSearchValue(event.target.value);
@@ -78,8 +78,8 @@ function SourceListItem({
   showItemDetail,
   hidden,
   highlighted,
+  classes,
 }) {
-  const classes = useStyles();
   const onClick = () => showItemDetail(item);
   const ref = useRef();
 

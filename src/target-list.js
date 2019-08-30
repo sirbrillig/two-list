@@ -10,10 +10,13 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import { useTransition, animated } from 'react-spring';
 import TotalHeader from './total-header';
-import useStyles from './style';
 
-export default function TargetList({ items, removeFromTarget, targetListRef }) {
-  const classes = useStyles();
+export default function TargetList({
+  items,
+  removeFromTarget,
+  targetListRef,
+  classes,
+}) {
   // We pad the bottom of the list to get the remove animation to look good
   const fakeItem = {
     id: 'abcdefghijklmnop',
@@ -49,13 +52,14 @@ export default function TargetList({ items, removeFromTarget, targetListRef }) {
         item={item}
         key={item.targetItemId}
         removeFromTarget={removeFromTarget}
+        classes={classes}
       />
     </animated.div>
   ));
   const totalDistance = items.length ? 7 * items.length : 0;
   return (
     <Paper elevation={0} className={classes.targetListBox}>
-      <TotalHeader totalDistance={totalDistance} />
+      <TotalHeader totalDistance={totalDistance} classes={classes} />
       <Divider />
       <List className={classes.targetList} ref={targetListRef}>
         {itemElements}
@@ -64,8 +68,7 @@ export default function TargetList({ items, removeFromTarget, targetListRef }) {
   );
 }
 
-function TargetListItem({ item, removeFromTarget }) {
-  const classes = useStyles();
+function TargetListItem({ item, removeFromTarget, classes }) {
   if (!item.label) {
     return (
       <ListItem className={classes.targetListItemEmpty}>

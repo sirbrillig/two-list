@@ -12,12 +12,11 @@ import React, { useState, useEffect } from 'react';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
-import useStyles from './style';
 import useKeyCode, { clamp } from './use-key-code';
 
 import google from './google.png';
 
-export default function ItemDetail({ item, onClose, newItem }) {
+export default function ItemDetail({ item, onClose, newItem, classes }) {
   return (
     <Dialog
       open={!!item || newItem}
@@ -25,20 +24,25 @@ export default function ItemDetail({ item, onClose, newItem }) {
       onClose={onClose}
       TransitionComponent={SlideTransition}>
       {item ? (
-        <ItemDetailContent item={item} onClose={onClose} newItem={newItem} />
+        <ItemDetailContent
+          item={item}
+          onClose={onClose}
+          newItem={newItem}
+          classes={classes}
+        />
       ) : (
         <ItemDetailContent
           item={{ label: '', id: '' }}
           onClose={onClose}
           newItem={newItem}
+          classes={classes}
         />
       )}
     </Dialog>
   );
 }
 
-function ItemDetailContent({ item, onClose, newItem }) {
-  const classes = useStyles();
+function ItemDetailContent({ item, onClose, newItem, classes }) {
   const [address, setAddress] = useState(item.address || '');
   const setName = event => setItemName(event.target.value);
   const [itemName, setItemName] = useState(item.label);
@@ -91,14 +95,13 @@ function ItemDetailContent({ item, onClose, newItem }) {
         <div>
           <AddressAutosuggestInput value={address} onChange={setAddress} />
         </div>
-        <PoweredByGoogle />
+        <PoweredByGoogle classes={classes} />
       </DialogContent>
     </React.Fragment>
   );
 }
 
-function PoweredByGoogle() {
-  const classes = useStyles();
+function PoweredByGoogle({ classes }) {
   return (
     <div>
       <img

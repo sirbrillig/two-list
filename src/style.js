@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/styles';
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   root: {
     width: '320px',
     padding: '0',
@@ -13,8 +13,8 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
     overflowY: 'hidden',
-    backgroundColor: '#6200EE !important',
-    color: '#fff !important',
+    backgroundColor: '#6200EE',
+    color: '#fff',
   },
   targetList: {
     padding: '0',
@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
     WebkitOverflowScrolling: 'touch',
   },
   removeButton: {
-    color: '#fff !important',
+    color: '#fff',
   },
   targetListItem: {
     borderBottom: '1px solid rgba(255, 255, 255, 0.4)',
@@ -45,16 +45,16 @@ const useStyles = makeStyles(() => ({
     backgroundClip: 'padding-box',
   },
   sourceListItemHidden: {
-    display: 'none !important',
+    display: 'none',
   },
   itemDetailAppBar: {
-    position: 'relative !important',
+    position: 'relative',
   },
   itemDetailTitle: {
-    flex: '1 !important',
+    flex: '1',
   },
   totalHeaderTitle: {
-    color: '#fff !important',
+    color: '#fff',
   },
   suggestion: {
     display: 'block',
@@ -77,8 +77,8 @@ const useStyles = makeStyles(() => ({
     marginTop: '1em',
   },
   addItemButton: {
-    fontSize: '2rem !important',
+    fontSize: '2rem',
   },
-}));
+});
 
 export default useStyles;

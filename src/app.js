@@ -1,11 +1,14 @@
 /* @format */
 import Container from '@material-ui/core/Container';
 import React, { useState, useEffect, useRef } from 'react';
-import useStyles from './style';
 import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
+
+// This must be imported last to have the styles injected low enough for
+// overrides to take place.
+import useStyles from './style';
 
 import './app.css';
 
@@ -83,19 +86,26 @@ export default function App() {
         items={savedItems}
         removeFromTarget={removeFromTarget}
         targetListRef={targetListRef}
+        classes={classes}
       />
       <SourceList
         items={items}
         sendToTarget={sendToTarget}
         showItemDetail={showItemDetail}
         active={!itemDetail}
+        classes={classes}
       />
       <ItemDetail
         item={itemDetail}
         onClose={onClose}
         newItem={isShowingAddItem}
+        classes={classes}
       />
-      <ActionToolbar createNewItem={createNewItem} clearItems={clearItems} />
+      <ActionToolbar
+        createNewItem={createNewItem}
+        clearItems={clearItems}
+        classes={classes}
+      />
     </Container>
   );
 }

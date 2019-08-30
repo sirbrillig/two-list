@@ -1,10 +1,8 @@
 /* @format */
 import React from 'react';
-import useStyles from './style';
 import CardHeader from '@material-ui/core/CardHeader';
 
-export default function TotalHeader({ totalDistance }) {
-  const classes = useStyles();
+export default function TotalHeader({ totalDistance, classes }) {
   const text = 'Total';
   const subText = `${totalDistance} miles`;
   return (
