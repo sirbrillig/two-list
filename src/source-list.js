@@ -100,7 +100,7 @@ function SourceListItem({
       selected={highlighted}
       onClick={onClick}
       ref={ref}>
-      <ListItemText>{item.label}</ListItemText>
+      <ListItemText primary={item.label} secondary={item.address} />
       <ListItemSecondaryAction>
         <IconButton
           size="small"

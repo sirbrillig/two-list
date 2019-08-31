@@ -46,6 +46,7 @@ const useStyles = makeStyles(theme => {
     targetList: {
       padding: '0',
       overflowY: 'scroll',
+      overflowX: 'hidden',
       WebkitOverflowScrolling: 'touch',
     },
     sourceListBox: {

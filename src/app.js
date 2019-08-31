@@ -23,24 +23,34 @@ export default function App() {
   const classes = useStyles();
 
   const [items, setItems] = useState([
-    { label: 'test item 1', id: 1 },
-    { label: 'test item 2', id: 2 },
-    { label: 'test item 3', id: 3 },
-    { label: 'test item 4', id: 4 },
-    { label: 'test item 5', id: 5 },
-    { label: 'test item 6', id: 6 },
-    { label: 'test item 7', id: 7 },
-    { label: 'test item 8', id: 8 },
-    { label: 'test item 9', id: 9 },
-    { label: 'test item 10', id: 10 },
+    { label: 'home', id: 1, address: '40 Church Street, Burlington VT' },
+    { label: 'work', id: 2, address: '172 Main Street, Burlington VT' },
+    {
+      label: 'favorite bar',
+      id: 3,
+      address: '12 Church Street, Burlington VT',
+    },
+    { label: 'sushi', id: 4, address: '223 Grain Street, Burlington VT' },
+    { label: 'candy', id: 5, address: '192 Silver Street, Burlington VT' },
+    { label: 'olive oil', id: 6, address: '22 Summit Street, Burlington VT' },
+    {
+      label: 'tea and coffee',
+      id: 7,
+      address: '45 Church Street, Burlington VT',
+    },
+    {
+      label: 'dance hall',
+      id: 8,
+      address: '20 Charlotte Street, Burlington VT',
+    },
+    { label: 'ski repair', id: 9, address: '4 Church Street, Burlington VT' },
+    {
+      label: 'church',
+      id: 10,
+      address: '1 Church Street, Burlington VT',
+    },
   ]);
-  const [savedItems, setSavedItems] = useState([
-    { label: 'original item a', id: 101, targetItemId: 4321 },
-    { label: 'original item b', id: 102, targetItemId: 4322 },
-    { label: 'original item c', id: 103, targetItemId: 4323 },
-    { label: 'original item d', id: 104, targetItemId: 4324 },
-    { label: 'original item e', id: 105, targetItemId: 4325 },
-  ]);
+  const [savedItems, setSavedItems] = useState([]);
   const [prevSavedItems, setPrevSavedItems] = useState(savedItems);
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
