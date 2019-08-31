@@ -7,8 +7,6 @@ import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import blue from '@material-ui/core/colors/blue';
-import deepPurple from '@material-ui/core/colors/deepPurple';
 
 // This must be imported last to have the styles injected low enough for
 // overrides to take place.
@@ -16,10 +14,32 @@ import useStyles from './style';
 
 import './app.css';
 
-export default function App() {
+const voyageurBlue = {
+  main: '#5989c1',
+  dark: '#225c90',
+  light: '#8bb9f4',
+  contrastText: '#ffffff',
+};
+
+const voyageurGrey = {
+  main: '#343435',
+  dark: '#0d0d0f',
+  light: '#5e5e5f',
+  contrastText: '#ffffff',
+};
+
+export default function AppContainer() {
   const theme = createMuiTheme({
-    palette: { primary: blue, secondary: deepPurple },
+    palette: { primary: voyageurBlue, secondary: voyageurGrey },
   });
+  return (
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  );
+}
+
+function App() {
   const classes = useStyles();
 
   const [items, setItems] = useState([
@@ -124,34 +144,32 @@ export default function App() {
   const clearItems = () => setSavedItems([]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container className={classes.root}>
-        <TargetList
-          items={savedItems}
-          removeFromTarget={removeFromTarget}
-          targetListRef={targetListRef}
-          classes={classes}
-        />
-        <SourceList
-          items={items}
-          sendToTarget={sendToTarget}
-          showItemDetail={showItemDetail}
-          active={!isShowingAddItem}
-          classes={classes}
-        />
-        <ItemDetail
-          item={itemDetail}
-          onClose={onClose}
-          newItem={isShowingAddItem}
-          classes={classes}
-        />
-        <ActionToolbar
-          createNewItem={createNewItem}
-          clearItems={clearItems}
-          classes={classes}
-        />
-      </Container>
-    </ThemeProvider>
+    <Container className={classes.root}>
+      <TargetList
+        items={savedItems}
+        removeFromTarget={removeFromTarget}
+        targetListRef={targetListRef}
+        classes={classes}
+      />
+      <SourceList
+        items={items}
+        sendToTarget={sendToTarget}
+        showItemDetail={showItemDetail}
+        active={!isShowingAddItem}
+        classes={classes}
+      />
+      <ItemDetail
+        item={itemDetail}
+        onClose={onClose}
+        newItem={isShowingAddItem}
+        classes={classes}
+      />
+      <ActionToolbar
+        createNewItem={createNewItem}
+        clearItems={clearItems}
+        classes={classes}
+      />
+    </Container>
   );
 }
 

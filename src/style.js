@@ -19,8 +19,7 @@ const useStyles = makeStyles(theme => {
     actionToolbar: {
       height: 'auto',
       zIndex: 2,
-      boxShadow:
-        '0px 1px 8px 0px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 3px 3px -2px rgba(0,0,0,0.12)',
+      boxShadow: theme.shadows[2],
       [theme.breakpoints.up('md')]: {
         order: 1,
         height: '100vh',
@@ -31,7 +30,7 @@ const useStyles = makeStyles(theme => {
       },
     },
     actionToolbarButtonIcon: {
-      color: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
     },
     actionToolbarButton: {
       [theme.breakpoints.up('md')]: {
@@ -94,7 +93,7 @@ const useStyles = makeStyles(theme => {
       padding: '0.5em',
     },
     sourceListItemButton: {
-      color: theme.palette.primary.main,
+      color: theme.palette.primary.dark,
     },
     sourceListItem: {
       borderBottom: '1px solid rgba(0, 0, 0, 0.14)',

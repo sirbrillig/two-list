@@ -111,7 +111,7 @@ function SourceListItem({
           aria-label="add"
           className={classes.sourceListItemButton}
           onClick={() => sendToTarget(item)}>
-          <Icon fontSize="large">add_circle</Icon>
+          <Icon fontSize="large">add_box</Icon>
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>
