@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => {
   return {
     root: {
-      width: '320px',
+      maxWidth: '400px',
       padding: '0',
       position: 'relative',
       display: 'flex',
@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => {
       height: '95vh',
       [theme.breakpoints.up('md')]: {
         flexDirection: 'row',
-        width: '100%',
+        maxWidth: '100%',
       },
     },
     actionToolbar: {
