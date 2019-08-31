@@ -32,10 +32,10 @@ export default function SourceList({
       setHighlighted(prev => clamp(prev + 1, 0, visibleItems.length - 1));
   };
   const moveUp = () => active && setHighlighted(prev => clamp(prev - 1, 0));
-  const chooseCurrent = useCallback(
-    () => active && sendToTarget(visibleItems[highlighted]),
-    [visibleItems, highlighted, active, sendToTarget],
-  );
+  const chooseCurrent = useCallback(() => {
+    active && console.log('adding to trip');
+    active && sendToTarget(visibleItems[highlighted]);
+  }, [visibleItems, highlighted, active, sendToTarget]);
   useKeyCode(40, moveDown); // down
   useKeyCode(38, moveUp); // up
   useKeyCode(13, chooseCurrent); // enter

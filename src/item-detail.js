@@ -268,10 +268,10 @@ function SuggestionList({ suggestions, onChange }) {
   const moveDown = () =>
     setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1));
   const moveUp = () => setHighlighted(prev => clamp(prev - 1, 0));
-  const chooseCurrent = React.useCallback(
-    () => suggestions[highlighted] && onChange(suggestions[highlighted].label),
-    [suggestions, highlighted, onChange],
-  );
+  const chooseCurrent = React.useCallback(() => {
+    console.log('adding current suggestion');
+    suggestions[highlighted] && onChange(suggestions[highlighted].label);
+  }, [suggestions, highlighted, onChange]);
   useKeyCode(40, moveDown); // down
   useKeyCode(38, moveUp); // up
   useKeyCode(13, chooseCurrent); // enter

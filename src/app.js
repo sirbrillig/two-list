@@ -142,6 +142,7 @@ function App() {
     setIsShowingAddItem(true);
   };
   const clearItems = () => setSavedItems([]);
+  const isOverlayVisible = isShowingAddItem || itemDetail;
 
   return (
     <Container className={classes.root}>
@@ -155,7 +156,7 @@ function App() {
         items={items}
         sendToTarget={sendToTarget}
         showItemDetail={showItemDetail}
-        active={!isShowingAddItem}
+        active={!isOverlayVisible}
         classes={classes}
       />
       <ItemDetail
