@@ -27,11 +27,14 @@ export default function SourceList({
       items.filter(item => doesItemMatchSearch(item, searchValue)),
     );
   }, [items, searchValue]);
-  const moveDown = () => {
+  const moveDown = useCallback(() => {
     active &&
       setHighlighted(prev => clamp(prev + 1, 0, visibleItems.length - 1));
-  };
-  const moveUp = () => active && setHighlighted(prev => clamp(prev - 1, 0));
+  }, [active, visibleItems]);
+  const moveUp = useCallback(
+    () => active && setHighlighted(prev => clamp(prev - 1, 0)),
+    [active, setHighlighted],
+  );
   const chooseCurrent = useCallback(() => {
     active && console.log('adding to trip');
     active && sendToTarget(visibleItems[highlighted]);

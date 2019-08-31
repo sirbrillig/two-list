@@ -1,6 +1,6 @@
 /* @format */
 import Container from '@material-ui/core/Container';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
@@ -100,12 +100,15 @@ function App() {
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
   const targetListRef = useRef();
-  const sendToTarget = item => {
-    const targetItem = { ...item, targetItemId: uniqueId() };
-    const newItems = [...savedItems, targetItem];
-    setPrevSavedItems(savedItems);
-    setSavedItems(newItems);
-  };
+  const sendToTarget = useCallback(
+    item => {
+      const targetItem = { ...item, targetItemId: uniqueId() };
+      const newItems = [...savedItems, targetItem];
+      setPrevSavedItems(savedItems);
+      setSavedItems(newItems);
+    },
+    [savedItems, setSavedItems, setPrevSavedItems],
+  );
   useEffect(() => {
     targetListRef.current &&
       savedItems.length > prevSavedItems.length &&

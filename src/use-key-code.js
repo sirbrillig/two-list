@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 
 export default function useKeyCode(code, callback) {
   useEffect(() => {
+    console.log('listening to keyCode', code);
     const downHandler = event => {
       if (event.keyCode === code) {
         event.preventDefault();

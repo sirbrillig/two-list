@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -265,9 +265,13 @@ function AddressAutosuggestInput({ value, onChange }) {
 
 function SuggestionList({ suggestions, onChange }) {
   const [highlighted, setHighlighted] = useState(0);
-  const moveDown = () =>
-    setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1));
-  const moveUp = () => setHighlighted(prev => clamp(prev - 1, 0));
+  const moveDown = useCallback(
+    () => setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1)),
+    [setHighlighted, suggestions],
+  );
+  const moveUp = useCallback(() => setHighlighted(prev => clamp(prev - 1, 0)), [
+    setHighlighted,
+  ]);
   const chooseCurrent = React.useCallback(() => {
     console.log('adding current suggestion');
     suggestions[highlighted] && onChange(suggestions[highlighted].label);
