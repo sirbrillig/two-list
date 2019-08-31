@@ -64,6 +64,9 @@ const useStyles = makeStyles(theme => {
     removeButton: {
       color: theme.palette.primary.contrastText,
     },
+    targetListHeaderDivider: {
+      backgroundColor: theme.palette.primary.contrastText,
+    },
     targetListItemEmpty: {
       minHeight: '0.5em',
     },

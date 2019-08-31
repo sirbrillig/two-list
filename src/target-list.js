@@ -62,7 +62,7 @@ export default function TargetList({
   return (
     <Paper elevation={0} className={classes.targetListBox}>
       <TotalHeader totalDistance={totalDistance} classes={classes} />
-      <Divider />
+      <Divider className={classes.targetListHeaderDivider} />
       <List className={classes.targetList} ref={targetListRef}>
         {itemElements}
       </List>
