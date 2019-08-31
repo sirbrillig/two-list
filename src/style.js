@@ -57,8 +57,13 @@ const useStyles = makeStyles(theme => {
       overflowY: 'hidden',
       display: 'flex',
       flexDirection: 'column',
+      borderBottomRightRadius: 0,
+      borderBottomLeftRadius: 0,
       [theme.breakpoints.up('md')]: {
         order: 2,
+        borderBottomRightRadius: theme.shape.borderRadius,
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
       },
     },
     sourceList: {
