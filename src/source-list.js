@@ -1,5 +1,5 @@
 /* @format */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Card from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
@@ -32,7 +32,10 @@ export default function SourceList({
       setHighlighted(prev => clamp(prev + 1, 0, visibleItems.length - 1));
   };
   const moveUp = () => active && setHighlighted(prev => clamp(prev - 1, 0));
-  const chooseCurrent = () => active && sendToTarget(visibleItems[highlighted]);
+  const chooseCurrent = useCallback(
+    () => active && sendToTarget(visibleItems[highlighted]),
+    [visibleItems, highlighted],
+  );
   useKeyCode(40, moveDown); // down
   useKeyCode(38, moveUp); // up
   useKeyCode(13, chooseCurrent); // enter
