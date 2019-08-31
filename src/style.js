@@ -18,10 +18,11 @@ const useStyles = makeStyles(theme => {
     actionToolbar: {
       [theme.breakpoints.up('md')]: {
         order: 1,
-        height: '100%',
+        height: '95vh',
         justifyContent: 'flex-start',
         flexDirection: 'column',
         padding: '0.5em 0 0 0',
+        boxSizing: 'border-box',
       },
     },
     actionToolbarButtonIcon: {
@@ -126,6 +127,10 @@ const useStyles = makeStyles(theme => {
     },
     PoweredByGoogle: {
       marginTop: '1em',
+    },
+    logo: {
+      width: '4em',
+      margin: 'auto 0.5em 0.5em 0.5em',
     },
   };
 });
