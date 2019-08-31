@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -135,6 +135,9 @@ function getSuggestionsFor({ service, input, location }) {
     console.log('looking for', input);
     const translatePredictions = predictions => {
       console.log('got', predictions);
+      if (!predictions) {
+        return resolve([]);
+      }
       resolve(predictions.map(({ description }) => ({ label: description })));
     };
     const queryOptions = { input };
@@ -265,20 +268,19 @@ function AddressAutosuggestInput({ value, onChange }) {
 
 function SuggestionList({ suggestions, onChange }) {
   const [highlighted, setHighlighted] = useState(0);
-  const moveDown = useCallback(
-    () => setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1)),
-    [setHighlighted, suggestions],
-  );
-  const moveUp = useCallback(() => setHighlighted(prev => clamp(prev - 1, 0)), [
-    setHighlighted,
-  ]);
-  const chooseCurrent = React.useCallback(() => {
+  const moveDown = useKeyCode(40);
+  const moveUp = useKeyCode(38);
+  const chooseCurrent = useKeyCode(13);
+  if (moveDown) {
+    setHighlighted(prev => clamp(prev + 1, 0, suggestions.length - 1));
+  }
+  if (moveUp) {
+    setHighlighted(prev => clamp(prev - 1, 0));
+  }
+  if (chooseCurrent) {
     console.log('adding current suggestion');
     suggestions[highlighted] && onChange(suggestions[highlighted].label);
-  }, [suggestions, highlighted, onChange]);
-  useKeyCode(40, moveDown); // down
-  useKeyCode(38, moveUp); // up
-  useKeyCode(13, chooseCurrent); // enter
+  }
   return (
     <Paper square>
       {suggestions.map((suggestion, index) => (

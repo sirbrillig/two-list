@@ -1,5 +1,5 @@
 /* @format */
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Card from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
@@ -27,21 +27,19 @@ export default function SourceList({
       items.filter(item => doesItemMatchSearch(item, searchValue)),
     );
   }, [items, searchValue]);
-  const moveDown = useCallback(() => {
+  const moveDown = useKeyCode(40);
+  const moveUp = useKeyCode(38);
+  const chooseCurrent = useKeyCode(13);
+  if (moveDown) {
     active &&
       setHighlighted(prev => clamp(prev + 1, 0, visibleItems.length - 1));
-  }, [active, visibleItems]);
-  const moveUp = useCallback(
-    () => active && setHighlighted(prev => clamp(prev - 1, 0)),
-    [active, setHighlighted],
-  );
-  const chooseCurrent = useCallback(() => {
-    active && console.log('adding to trip');
+  }
+  if (moveUp) {
+    active && setHighlighted(prev => clamp(prev - 1, 0));
+  }
+  if (chooseCurrent) {
     active && sendToTarget(visibleItems[highlighted]);
-  }, [visibleItems, highlighted, active, sendToTarget]);
-  useKeyCode(40, moveDown); // down
-  useKeyCode(38, moveUp); // up
-  useKeyCode(13, chooseCurrent); // enter
+  }
   useEffect(() => setHighlighted(0), [visibleItems]);
 
   const highlightedItem = visibleItems.reduce(

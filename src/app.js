@@ -96,27 +96,27 @@ function App() {
       targetItemId: '2bc1',
     },
   ]);
-  const [prevSavedItems, setPrevSavedItems] = useState(savedItems);
+  const prevSavedItems = useRef(savedItems);
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
   const targetListRef = useRef();
-  const sendToTarget = useCallback(
-    item => {
-      const targetItem = { ...item, targetItemId: uniqueId() };
-      const newItems = [...savedItems, targetItem];
-      setPrevSavedItems(savedItems);
-      setSavedItems(newItems);
-    },
-    [savedItems, setSavedItems, setPrevSavedItems],
-  );
+  const sendToTarget = useCallback(item => {
+    const targetItem = { ...item, targetItemId: uniqueId() };
+    setSavedItems(saved => [...saved, targetItem]);
+  }, []);
   useEffect(() => {
-    targetListRef.current &&
-      savedItems.length > prevSavedItems.length &&
-      targetListRef.current.lastElementChild.scrollIntoView({
-        block: 'start',
-        behavior: 'smooth',
-      });
-  }, [savedItems, prevSavedItems]);
+    if (!targetListRef.current) {
+      return;
+    }
+    if (savedItems.length <= prevSavedItems.current.length) {
+      return;
+    }
+    prevSavedItems.current = savedItems;
+    targetListRef.current.lastElementChild.scrollIntoView({
+      block: 'start',
+      behavior: 'smooth',
+    });
+  }, [savedItems]);
   const removeFromTarget = item =>
     setSavedItems(
       savedItems.filter(it => it.targetItemId !== item.targetItemId),

@@ -1,19 +1,26 @@
 /* @format */
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function useKeyCode(code, callback) {
+export default function useKeyCode(keyCode) {
+  const [isKeyPressed, setKeyPressed] = useState();
+  // Only allow fetching each keypress event once to prevent infinite loops
+  if (isKeyPressed) {
+    setKeyPressed(false);
+  }
+
   useEffect(() => {
-    console.log('listening to keyCode', code);
-    const downHandler = event => {
-      if (event.keyCode === code) {
+    function downHandler(event) {
+      if (event.keyCode === keyCode) {
         event.preventDefault();
-        callback();
+        setKeyPressed(true);
       }
-    };
+    }
     window.addEventListener('keydown', downHandler);
     return () => window.removeEventListener('keydown', downHandler);
-  }, [code, callback]);
+  }, [keyCode]);
+
+  return isKeyPressed;
 }
 
 export function clamp(value, min, max) {
