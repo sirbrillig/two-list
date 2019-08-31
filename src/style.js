@@ -17,6 +17,7 @@ const useStyles = makeStyles(theme => {
       },
     },
     actionToolbar: {
+      height: 'auto',
       [theme.breakpoints.up('md')]: {
         order: 1,
         height: '100vh',
@@ -130,8 +131,20 @@ const useStyles = makeStyles(theme => {
       marginTop: '1em',
     },
     logo: {
-      width: '4em',
+      width: '3em',
       margin: 'auto 0.5em 0.5em 0.5em',
+      padding: '0.5em',
+      order: 2,
+      [theme.breakpoints.up('md')]: {
+        width: '4em',
+        order: 4,
+      },
+    },
+    actionToolbarAdd: {
+      order: 1,
+    },
+    actionToolbarClear: {
+      order: 3,
     },
   };
 });

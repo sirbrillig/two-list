@@ -27,13 +27,17 @@ export default function ActionToolbar({ createNewItem, clearItems, classes }) {
         label="Add"
         icon={addIcon}
         onClick={createNewItem}
-        className={classes.actionToolbarButton}
+        className={`${classes.actionToolbarButton}  ${
+          classes.actionToolbarAdd
+        }`}
       />
       <BottomNavigationAction
         label="Clear"
         icon={clearIcon}
         onClick={clearItems}
-        className={classes.actionToolbarButton}
+        className={`${classes.actionToolbarButton}  ${
+          classes.actionToolbarClear
+        }`}
       />
       <Logo classes={classes} />
     </BottomNavigation>
