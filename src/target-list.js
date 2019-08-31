@@ -32,7 +32,7 @@ export default function TargetList({
       config: { clamp: true, friction: 20 },
       from: {
         opacity: 0,
-        transform: 'translate3d(100%,0,0)',
+        transform: 'translate3d(-100%,0,0)',
         maxHeight: '50px',
       },
       enter: {
@@ -41,7 +41,7 @@ export default function TargetList({
         maxHeight: '50px',
       },
       leave: () => async next => {
-        await next({ opacity: 0, transform: 'translate3d(-50%,0,0)' });
+        await next({ opacity: 0, transform: 'translate3d(50%,0,0)' });
         await next({ maxHeight: '0em' });
       },
     },
