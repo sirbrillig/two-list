@@ -50,7 +50,32 @@ export default function App() {
       address: '1 Church Street, Burlington VT',
     },
   ]);
-  const [savedItems, setSavedItems] = useState([]);
+  const [savedItems, setSavedItems] = useState([
+    {
+      label: 'home',
+      id: 1,
+      address: '40 Church Street, Burlington VT',
+      targetItemId: '1bc1',
+    },
+    {
+      label: 'work',
+      id: 2,
+      address: '172 Main Street, Burlington VT',
+      targetItemId: '3nas',
+    },
+    {
+      label: 'tea and coffee',
+      id: 7,
+      address: '45 Church Street, Burlington VT',
+      targetItemId: '3na0',
+    },
+    {
+      label: 'home',
+      id: 1,
+      address: '40 Church Street, Burlington VT',
+      targetItemId: '2bc1',
+    },
+  ]);
   const [prevSavedItems, setPrevSavedItems] = useState(savedItems);
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
