@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => {
         height: '100%',
         justifyContent: 'flex-start',
         flexDirection: 'column',
+        padding: '0.5em 0 0 0',
       },
     },
     actionToolbarButton: {
@@ -101,9 +102,6 @@ const useStyles = makeStyles(theme => {
     },
     PoweredByGoogle: {
       marginTop: '1em',
-    },
-    addItemButton: {
-      fontSize: '2rem',
     },
   };
 });
