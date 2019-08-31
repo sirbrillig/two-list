@@ -60,6 +60,7 @@ export default function SourceList({
   const onSearchChange = event => setSearchValue(event.target.value);
   const searchItem = (
     <SourceListSearch
+      classes={classes}
       onChange={onSearchChange}
       value={searchValue}
       key="search-element"
@@ -117,12 +118,20 @@ function SourceListItem({
   );
 }
 
-function SourceListSearch({ value, onChange }) {
+function SourceListSearch({ value, onChange, classes }) {
+  const label = (
+    <>
+      <Icon fontSize="small" className={classes.searchIcon}>
+        search
+      </Icon>
+      Search
+    </>
+  );
   return (
     <ListItem>
       <TextField
         id="search"
-        label="Search"
+        label={label}
         type="search"
         fullWidth
         value={value}

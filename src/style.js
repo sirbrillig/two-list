@@ -152,6 +152,10 @@ const useStyles = makeStyles(theme => {
     actionToolbarClear: {
       order: 3,
     },
+    searchIcon: {
+      verticalAlign: 'sub',
+      marginRight: '2px',
+    },
   };
 });
 
