@@ -1,6 +1,6 @@
 /* @format */
 import Container from '@material-ui/core/Container';
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
@@ -100,10 +100,10 @@ function App() {
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
   const targetListRef = useRef();
-  const sendToTarget = useCallback(item => {
+  const sendToTarget = item => {
     const targetItem = { ...item, targetItemId: uniqueId() };
     setSavedItems(saved => [...saved, targetItem]);
-  }, []);
+  };
   useEffect(() => {
     if (!targetListRef.current) {
       return;
