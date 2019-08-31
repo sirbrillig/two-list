@@ -64,12 +64,11 @@ const useStyles = makeStyles(theme => {
     removeButton: {
       color: theme.palette.primary.contrastText,
     },
-    targetListItem: {
-      borderBottom: '1px solid rgba(255, 255, 255, 0.4)',
-      backgroundClip: 'padding-box',
-    },
     targetListItemEmpty: {
       minHeight: '0.5em',
+    },
+    targetListItemDot: {
+      padding: '0.5em',
     },
     sourceListItemButton: {
       color: theme.palette.primary.main,

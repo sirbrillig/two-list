@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Icon from '@material-ui/core/Icon';
+import StepIcon from '@material-ui/core/StepIcon';
 import IconButton from '@material-ui/core/IconButton';
 import { useTransition, animated } from 'react-spring';
 import TotalHeader from './total-header';
@@ -46,10 +47,11 @@ export default function TargetList({
     },
   );
 
-  const itemElements = slideInTransitions.map(({ item, props, key }) => (
+  const itemElements = slideInTransitions.map(({ item, props, key }, index) => (
     <animated.div key={key} style={props}>
       <TargetListItem
         item={item}
+        itemNumber={index}
         key={item.targetItemId}
         removeFromTarget={removeFromTarget}
         classes={classes}
@@ -68,7 +70,7 @@ export default function TargetList({
   );
 }
 
-function TargetListItem({ item, removeFromTarget, classes }) {
+function TargetListItem({ item, itemNumber, removeFromTarget, classes }) {
   if (!item.label) {
     return (
       <ListItem className={classes.targetListItemEmpty}>
@@ -78,6 +80,10 @@ function TargetListItem({ item, removeFromTarget, classes }) {
   }
   return (
     <ListItem className={classes.targetListItem}>
+      <StepIcon
+        classes={{ root: classes.targetListItemDot }}
+        icon={itemNumber + 1}
+      />
       <ListItemText>{item.label}</ListItemText>
       <ListItemSecondaryAction>
         <IconButton
