@@ -99,7 +99,13 @@ const useStyles = makeStyles(theme => {
       flex: '1',
     },
     totalHeaderTitle: {
-      color: '#fff',
+      color: theme.palette.primary.contrastText,
+      [theme.breakpoints.up('md')]: {
+        position: 'absolute',
+        right: '0',
+        top: '0.4em',
+        margin: '1em',
+      },
     },
     suggestion: {
       display: 'block',
