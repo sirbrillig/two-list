@@ -108,12 +108,17 @@ const useStyles = makeStyles(theme => {
     itemDetailTitle: {
       flex: '1',
     },
-    totalHeaderTitle: {
+    totalHeaderDistance: {
       color: theme.palette.primary.contrastText,
-      position: 'absolute',
-      right: '0',
-      top: '0.4em',
-      margin: '1em',
+      fontSize: '1.4em',
+    },
+    totalHeaderContent: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    totalHeaderIcon: {
+      verticalAlign: 'bottom',
+      marginLeft: '5px',
     },
     suggestion: {
       display: 'block',

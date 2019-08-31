@@ -1,17 +1,26 @@
 /* @format */
 import React from 'react';
 import CardHeader from '@material-ui/core/CardHeader';
+import Icon from '@material-ui/core/Icon';
 
 export default function TotalHeader({ totalDistance, classes }) {
-  const text = 'Total';
   const subText = `${totalDistance} miles`;
-  return (
+  const title = (
     <React.Fragment>
-      <CardHeader
-        classes={{ subheader: classes.totalHeaderTitle }}
-        title={text}
-        subheader={subText}
-      />
+      Total
+      <Icon fontSize="large" className={classes.totalHeaderIcon}>
+        drive_eta
+      </Icon>
     </React.Fragment>
+  );
+  return (
+    <CardHeader
+      classes={{
+        content: classes.totalHeaderContent,
+        subheader: classes.totalHeaderDistance,
+      }}
+      title={title}
+      subheader={subText}
+    />
   );
 }
