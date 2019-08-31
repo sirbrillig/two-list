@@ -54,8 +54,11 @@ export default function TargetList({
         itemNumber={index}
         key={item.targetItemId}
         removeFromTarget={removeFromTarget}
-        classes={classes}
-      />
+        classes={classes}>
+        {index < items.length - 1 && (
+          <TargetListItemConnector classes={classes} />
+        )}
+      </TargetListItem>
     </animated.div>
   ));
   const totalDistance = items.length ? 7 * items.length : 0;
@@ -70,7 +73,17 @@ export default function TargetList({
   );
 }
 
-function TargetListItem({ item, itemNumber, removeFromTarget, classes }) {
+function TargetListItemConnector({ classes }) {
+  return <div className={classes.targetListItemConnector}> </div>;
+}
+
+function TargetListItem({
+  item,
+  itemNumber,
+  removeFromTarget,
+  classes,
+  children,
+}) {
   if (!item.label) {
     return (
       <ListItem className={classes.targetListItemEmpty}>
@@ -94,6 +107,7 @@ function TargetListItem({ item, itemNumber, removeFromTarget, classes }) {
           <Icon>remove_circle</Icon>
         </IconButton>
       </ListItemSecondaryAction>
+      {children}
     </ListItem>
   );
 }

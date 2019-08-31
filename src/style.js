@@ -70,6 +70,14 @@ const useStyles = makeStyles(theme => {
     targetListItemEmpty: {
       minHeight: '0.5em',
     },
+    targetListItemConnector: {
+      position: 'absolute',
+      minHeight: '1em',
+      borderRight: `1px solid ${theme.palette.primary.contrastText}`,
+      left: 0,
+      top: '3em',
+      paddingLeft: '2.5em',
+    },
     targetListItemDot: {
       padding: '0.5em',
     },
