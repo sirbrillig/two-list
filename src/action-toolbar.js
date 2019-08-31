@@ -9,16 +9,18 @@ export default function ActionToolbar({ createNewItem, clearItems, classes }) {
   const clearIcon = <Icon className={classes.addItemButton}>delete_sweep</Icon>;
 
   return (
-    <BottomNavigation showLabels>
+    <BottomNavigation showLabels className={classes.actionToolbar}>
       <BottomNavigationAction
         label="Add"
         icon={addIcon}
         onClick={createNewItem}
+        className={classes.actionToolbarButton}
       />
       <BottomNavigationAction
         label="Clear"
         icon={clearIcon}
         onClick={clearItems}
+        className={classes.actionToolbarButton}
       />
     </BottomNavigation>
   );
