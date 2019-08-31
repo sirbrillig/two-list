@@ -51,12 +51,13 @@ const useStyles = makeStyles(theme => {
     sourceListBox: {
       flex: 2,
       overflowY: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
       [theme.breakpoints.up('md')]: {
         order: 2,
       },
     },
     sourceList: {
-      height: '70%',
       overflowY: 'scroll',
       WebkitOverflowScrolling: 'touch',
     },
