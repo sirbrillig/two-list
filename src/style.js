@@ -5,11 +5,12 @@ const useStyles = makeStyles(theme => {
   return {
     root: {
       maxWidth: '400px',
+      backgroundColor: theme.palette.primary.dark,
       padding: '0',
       position: 'relative',
       display: 'flex',
       flexDirection: 'column',
-      height: '95vh',
+      height: '100vh',
       [theme.breakpoints.up('md')]: {
         flexDirection: 'row',
         maxWidth: '100%',
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => {
     actionToolbar: {
       [theme.breakpoints.up('md')]: {
         order: 1,
-        height: '95vh',
+        height: '100vh',
         justifyContent: 'flex-start',
         flexDirection: 'column',
         padding: '0.5em 0 0 0',

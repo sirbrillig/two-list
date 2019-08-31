@@ -19,7 +19,10 @@ export default function ActionToolbar({ createNewItem, clearItems, classes }) {
   );
 
   return (
-    <BottomNavigation showLabels className={classes.actionToolbar}>
+    <BottomNavigation
+      showLabels
+      elevation={3}
+      className={classes.actionToolbar}>
       <BottomNavigationAction
         label="Add"
         icon={addIcon}
