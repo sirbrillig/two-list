@@ -63,7 +63,7 @@ export default function TargetList({
   ));
   const totalDistance = items.length ? 7 * items.length : 0;
   return (
-    <Paper elevation={0} className={classes.targetListBox}>
+    <Paper elevation={0} square={true} className={classes.targetListBox}>
       <TotalHeader totalDistance={totalDistance} classes={classes} />
       <Divider className={classes.targetListHeaderDivider} />
       <List className={classes.targetList} ref={targetListRef}>
