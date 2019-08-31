@@ -69,7 +69,7 @@ export default function SourceList({
   const itemsWithSearch = [searchItem, ...itemElements];
   return (
     <Card elevation={1} className={classes.sourceListBox}>
-      <CardHeader title="Items" />
+      <CardHeader title="Places" />
       <Divider />
       <List className={classes.sourceList}>{itemsWithSearch}</List>
     </Card>
