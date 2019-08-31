@@ -105,9 +105,9 @@ function SourceListItem({
         <IconButton
           size="small"
           aria-label="add"
-          color="primary"
+          className={classes.sourceListItemButton}
           onClick={() => sendToTarget(item)}>
-          <Icon>add_circle</Icon>
+          <Icon fontSize="large">add_circle</Icon>
         </IconButton>
       </ListItemSecondaryAction>
     </ListItem>

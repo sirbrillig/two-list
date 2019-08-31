@@ -5,6 +5,10 @@ import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import blue from '@material-ui/core/colors/blue';
+import deepPurple from '@material-ui/core/colors/deepPurple';
 
 // This must be imported last to have the styles injected low enough for
 // overrides to take place.
@@ -13,7 +17,11 @@ import useStyles from './style';
 import './app.css';
 
 export default function App() {
+  const theme = createMuiTheme({
+    palette: { primary: blue, secondary: deepPurple },
+  });
   const classes = useStyles();
+
   const [items, setItems] = useState([
     { label: 'test item 1', id: 1 },
     { label: 'test item 2', id: 2 },
@@ -81,32 +89,34 @@ export default function App() {
   const clearItems = () => setSavedItems([]);
 
   return (
-    <Container className={classes.root}>
-      <TargetList
-        items={savedItems}
-        removeFromTarget={removeFromTarget}
-        targetListRef={targetListRef}
-        classes={classes}
-      />
-      <SourceList
-        items={items}
-        sendToTarget={sendToTarget}
-        showItemDetail={showItemDetail}
-        active={!itemDetail}
-        classes={classes}
-      />
-      <ItemDetail
-        item={itemDetail}
-        onClose={onClose}
-        newItem={isShowingAddItem}
-        classes={classes}
-      />
-      <ActionToolbar
-        createNewItem={createNewItem}
-        clearItems={clearItems}
-        classes={classes}
-      />
-    </Container>
+    <ThemeProvider theme={theme}>
+      <Container className={classes.root}>
+        <TargetList
+          items={savedItems}
+          removeFromTarget={removeFromTarget}
+          targetListRef={targetListRef}
+          classes={classes}
+        />
+        <SourceList
+          items={items}
+          sendToTarget={sendToTarget}
+          showItemDetail={showItemDetail}
+          active={!itemDetail}
+          classes={classes}
+        />
+        <ItemDetail
+          item={itemDetail}
+          onClose={onClose}
+          newItem={isShowingAddItem}
+          classes={classes}
+        />
+        <ActionToolbar
+          createNewItem={createNewItem}
+          clearItems={clearItems}
+          classes={classes}
+        />
+      </Container>
+    </ThemeProvider>
   );
 }
 

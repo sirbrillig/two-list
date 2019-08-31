@@ -24,6 +24,9 @@ const useStyles = makeStyles(theme => {
         padding: '0.5em 0 0 0',
       },
     },
+    actionToolbarButtonIcon: {
+      color: theme.palette.primary.main,
+    },
     actionToolbarButton: {
       [theme.breakpoints.up('md')]: {
         flex: 0,
@@ -34,8 +37,8 @@ const useStyles = makeStyles(theme => {
       display: 'flex',
       flexDirection: 'column',
       overflowY: 'hidden',
-      backgroundColor: '#6200EE',
-      color: '#fff',
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.primary.contrastText,
       [theme.breakpoints.up('md')]: {
         order: 3,
       },
@@ -58,7 +61,7 @@ const useStyles = makeStyles(theme => {
       WebkitOverflowScrolling: 'touch',
     },
     removeButton: {
-      color: '#fff',
+      color: theme.palette.primary.contrastText,
     },
     targetListItem: {
       borderBottom: '1px solid rgba(255, 255, 255, 0.4)',
@@ -66,6 +69,9 @@ const useStyles = makeStyles(theme => {
     },
     targetListItemEmpty: {
       minHeight: '0.5em',
+    },
+    sourceListItemButton: {
+      color: theme.palette.primary.main,
     },
     sourceListItem: {
       borderBottom: '1px solid rgba(0, 0, 0, 0.14)',
