@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => {
       },
     },
     targetListBox: {
-      flex: 1.6,
+      flex: 1.3,
       display: 'flex',
       flexDirection: 'column',
       overflowY: 'hidden',
@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => {
       WebkitOverflowScrolling: 'touch',
     },
     sourceListBox: {
-      flex: 2,
+      flex: 2.3,
       overflowY: 'hidden',
       display: 'flex',
       flexDirection: 'column',
@@ -103,12 +103,10 @@ const useStyles = makeStyles(theme => {
     },
     totalHeaderTitle: {
       color: theme.palette.primary.contrastText,
-      [theme.breakpoints.up('md')]: {
-        position: 'absolute',
-        right: '0',
-        top: '0.4em',
-        margin: '1em',
-      },
+      position: 'absolute',
+      right: '0',
+      top: '0.4em',
+      margin: '1em',
     },
     suggestion: {
       display: 'block',
