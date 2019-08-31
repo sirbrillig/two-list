@@ -34,7 +34,7 @@ export default function SourceList({
   const moveUp = () => active && setHighlighted(prev => clamp(prev - 1, 0));
   const chooseCurrent = useCallback(
     () => active && sendToTarget(visibleItems[highlighted]),
-    [visibleItems, highlighted],
+    [visibleItems, highlighted, active, sendToTarget],
   );
   useKeyCode(40, moveDown); // down
   useKeyCode(38, moveUp); // up

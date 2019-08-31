@@ -136,7 +136,7 @@ export default function App() {
           items={items}
           sendToTarget={sendToTarget}
           showItemDetail={showItemDetail}
-          active={!itemDetail}
+          active={!isShowingAddItem}
           classes={classes}
         />
         <ItemDetail

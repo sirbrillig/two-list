@@ -98,6 +98,7 @@ function TargetListItem({
         icon={itemNumber + 1}
       />
       <ListItemText>{item.label}</ListItemText>
+      {children}
       <ListItemSecondaryAction>
         <IconButton
           size="small"
@@ -107,7 +108,6 @@ function TargetListItem({
           <Icon>remove_circle</Icon>
         </IconButton>
       </ListItemSecondaryAction>
-      {children}
     </ListItem>
   );
 }

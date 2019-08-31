@@ -6,6 +6,7 @@ export default function useKeyCode(code, callback) {
   useEffect(() => {
     const downHandler = event => {
       if (event.keyCode === code) {
+        event.preventDefault();
         callback();
       }
     };
