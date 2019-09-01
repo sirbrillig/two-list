@@ -3,8 +3,7 @@ import React from 'react';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Icon from '@material-ui/core/Icon';
-
-import logo from './logo-small.png';
+import Logo from './logo';
 
 export default function ActionToolbar({ createNewItem, clearItems, classes }) {
   const addIcon = (
@@ -36,11 +35,7 @@ export default function ActionToolbar({ createNewItem, clearItems, classes }) {
           classes.actionToolbarClear
         }`}
       />
-      <Logo classes={classes} />
+      <Logo className={classes.bottomLogo} />
     </BottomNavigation>
   );
-}
-
-function Logo({ classes }) {
-  return <img src={logo} className={classes.logo} alt="Voyageur" />;
 }

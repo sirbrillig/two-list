@@ -16,6 +16,24 @@ const useStyles = makeStyles(theme => {
         maxWidth: '100%',
       },
     },
+    mainToolbar: {
+      backgroundColor: theme.palette.primary.main,
+      [theme.breakpoints.up('md')]: {
+        width: 'auto',
+      },
+    },
+    mainToolbarToolbar: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      [theme.breakpoints.up('md')]: {
+        padding: 0,
+      },
+    },
+    mainToolbarTitle: {
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+    },
     actionToolbar: {
       height: 'auto',
       zIndex: 2,
@@ -140,12 +158,19 @@ const useStyles = makeStyles(theme => {
     PoweredByGoogle: {
       marginTop: '1em',
     },
-    logo: {
+    topLogo: {
+      display: 'inline',
       width: '3em',
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+    },
+    bottomLogo: {
       margin: 'auto 0.5em 0.5em 0.5em',
       padding: '0.5em',
-      order: 2,
+      display: 'none',
       [theme.breakpoints.up('md')]: {
+        display: 'inline',
         width: '4em',
         order: 4,
       },

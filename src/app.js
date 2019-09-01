@@ -5,6 +5,7 @@ import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
+import MainToolbar from './main-toolbar';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -149,6 +150,7 @@ function App() {
 
   return (
     <Container className={classes.root}>
+      <MainToolbar classes={classes} />
       <TargetList
         items={savedItems}
         removeFromTarget={removeFromTarget}
