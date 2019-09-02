@@ -51,7 +51,7 @@ function ItemDetailContent({ item, onClose, newItem, classes }) {
   }, [item]);
 
   const saveChanges = () => {
-    if (!itemName) {
+    if (!itemName || !address) {
       return;
     }
     if (newItem) {
@@ -254,6 +254,7 @@ function AddressAutosuggestInput({ value, onChange }) {
         value={value}
         onChange={onType}
         autoComplete="off"
+        error={!value}
       />
       {suggestions && (
         <SuggestionList
