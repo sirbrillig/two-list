@@ -35,7 +35,7 @@ export default function LoggedOut({ classes, logIn }) {
             onClick={logIn}
             fullWidth
             size="large"
-            variant="outlined">
+            variant="contained">
             Log in
           </Button>
         </div>
