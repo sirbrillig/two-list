@@ -158,6 +158,12 @@ const useStyles = makeStyles(theme => {
     PoweredByGoogle: {
       marginTop: '1em',
     },
+    loggedOutLogo: {
+      display: 'inline',
+      width: '3em',
+      height: '3em',
+      padding: '16px',
+    },
     topLogo: {
       display: 'inline',
       width: '3em',
@@ -200,11 +206,17 @@ const useStyles = makeStyles(theme => {
       },
     },
     loggedOut: {
-      width: '50vw',
-      height: '50vh',
+      minWidth: '300px',
       boxSizing: 'border-box',
-      padding: '1em',
-    }
+      padding: '0 1em 1.5em 1em',
+      [theme.breakpoints.up('md')]: {
+        minWidth: '400px',
+      },
+    },
+    loggedOutHeader: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
   };
 });
 

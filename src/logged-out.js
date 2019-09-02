@@ -6,12 +6,16 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Logo from './logo';
 
 export default function LoggedOut({ classes, logIn }) {
   return (
     <Container className={classes.loggedOutRoot}>
       <Card elevation={1} className={classes.loggedOut}>
-        <CardHeader title="Voyageur" subheader="Log In" />
+        <div className={classes.loggedOutHeader}>
+          <CardHeader title="Voyageur" subheader="Log In" />
+          <Logo className={classes.loggedOutLogo} />
+        </div>
         <Divider />
         <div>
           <TextField id="username" label="Username" margin="normal" fullWidth />
