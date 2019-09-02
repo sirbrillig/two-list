@@ -10,6 +10,7 @@ import LoggedOut from './logged-out';
 import { NoticesProvider, Notices } from './notices';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import locations from './sample-locations';
 
 // This must be imported last to have the styles injected low enough for
 // overrides to take place.
@@ -46,60 +47,8 @@ function App() {
   const classes = useStyles();
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  const [items, setItems] = useState([
-    { label: 'home', id: 1, address: '40 Church Street, Burlington VT' },
-    { label: 'work', id: 2, address: '172 Main Street, Burlington VT' },
-    {
-      label: 'favorite bar',
-      id: 3,
-      address: '12 Church Street, Burlington VT',
-    },
-    { label: 'sushi', id: 4, address: '223 Grain Street, Burlington VT' },
-    { label: 'candy', id: 5, address: '192 Silver Street, Burlington VT' },
-    { label: 'olive oil', id: 6, address: '22 Summit Street, Burlington VT' },
-    {
-      label: 'tea and coffee',
-      id: 7,
-      address: '45 Church Street, Burlington VT',
-    },
-    {
-      label: 'dance hall',
-      id: 8,
-      address: '20 Charlotte Street, Burlington VT',
-    },
-    { label: 'ski repair', id: 9, address: '4 Church Street, Burlington VT' },
-    {
-      label: 'church',
-      id: 10,
-      address: '1 Church Street, Burlington VT',
-    },
-  ]);
-  const [savedItems, setSavedItems] = useState([
-    {
-      label: 'home',
-      id: 1,
-      address: '40 Church Street, Burlington VT',
-      targetItemId: '1bc1',
-    },
-    {
-      label: 'work',
-      id: 2,
-      address: '172 Main Street, Burlington VT',
-      targetItemId: '3nas',
-    },
-    {
-      label: 'tea and coffee',
-      id: 7,
-      address: '45 Church Street, Burlington VT',
-      targetItemId: '3na0',
-    },
-    {
-      label: 'home',
-      id: 1,
-      address: '40 Church Street, Burlington VT',
-      targetItemId: '2bc1',
-    },
-  ]);
+  const [items, setItems] = useState(locations);
+  const [savedItems, setSavedItems] = useState([]);
   const prevSavedItems = useRef(savedItems);
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
