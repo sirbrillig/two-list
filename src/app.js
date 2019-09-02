@@ -6,6 +6,7 @@ import SourceList from './source-list';
 import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
 import MainToolbar from './main-toolbar';
+import LoggedOut from './logged-out';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -42,6 +43,7 @@ export default function AppContainer() {
 
 function App() {
   const classes = useStyles();
+  const [isLoggedIn, setLoggedIn] = useState(false);
 
   const [items, setItems] = useState([
     { label: 'home', id: 1, address: '40 Church Street, Burlington VT' },
@@ -148,9 +150,13 @@ function App() {
   const clearItems = () => setSavedItems([]);
   const isOverlayVisible = isShowingAddItem || itemDetail;
 
+  if (!isLoggedIn) {
+    return <LoggedOut classes={classes} logIn={() => setLoggedIn(true)} />;
+  }
+
   return (
     <Container className={classes.root}>
-      <MainToolbar classes={classes} />
+      <MainToolbar classes={classes} logOut={() => setLoggedIn(false)} />
       <TargetList
         items={savedItems}
         removeFromTarget={removeFromTarget}

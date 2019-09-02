@@ -8,12 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-export default function MainToolbar({ classes }) {
+export default function MainToolbar({ classes, logOut }) {
   const accountMenuRef = useRef();
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const onAccountMenuClick = () => setAccountMenuOpen(true);
   const onAccountMenuClose = () => setAccountMenuOpen(false);
-  const logOut = () => {};
   return (
     <AppBar position="relative" className={classes.mainToolbar}>
       <Toolbar className={classes.mainToolbarToolbar}>

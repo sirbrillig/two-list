@@ -185,6 +185,26 @@ const useStyles = makeStyles(theme => {
       verticalAlign: 'sub',
       marginRight: '2px',
     },
+    loggedOutRoot: {
+      backgroundColor: theme.palette.primary.dark,
+      padding: '0',
+      position: 'relative',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      flexDirection: 'column',
+      height: '100vh',
+      maxWidth: '100%',
+      [theme.breakpoints.up('md')]: {
+        flexDirection: 'row',
+      },
+    },
+    loggedOut: {
+      width: '50vw',
+      height: '50vh',
+      boxSizing: 'border-box',
+      padding: '1em',
+    }
   };
 });
 
