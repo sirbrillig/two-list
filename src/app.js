@@ -7,6 +7,7 @@ import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
 import MainToolbar from './main-toolbar';
 import LoggedOut from './logged-out';
+import { NoticesProvider, Notices } from './notices';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -156,31 +157,34 @@ function App() {
 
   return (
     <Container className={classes.root}>
-      <MainToolbar classes={classes} logOut={() => setLoggedIn(false)} />
-      <TargetList
-        items={savedItems}
-        removeFromTarget={removeFromTarget}
-        targetListRef={targetListRef}
-        classes={classes}
-      />
-      <SourceList
-        items={items}
-        sendToTarget={sendToTarget}
-        showItemDetail={showItemDetail}
-        active={!isOverlayVisible}
-        classes={classes}
-      />
-      <ItemDetail
-        item={itemDetail}
-        onClose={onClose}
-        newItem={isShowingAddItem}
-        classes={classes}
-      />
-      <ActionToolbar
-        createNewItem={createNewItem}
-        clearItems={clearItems}
-        classes={classes}
-      />
+      <NoticesProvider>
+        <MainToolbar classes={classes} logOut={() => setLoggedIn(false)} />
+        <TargetList
+          items={savedItems}
+          removeFromTarget={removeFromTarget}
+          targetListRef={targetListRef}
+          classes={classes}
+        />
+        <SourceList
+          items={items}
+          sendToTarget={sendToTarget}
+          showItemDetail={showItemDetail}
+          active={!isOverlayVisible}
+          classes={classes}
+        />
+        <ItemDetail
+          item={itemDetail}
+          onClose={onClose}
+          newItem={isShowingAddItem}
+          classes={classes}
+        />
+        <ActionToolbar
+          createNewItem={createNewItem}
+          clearItems={clearItems}
+          classes={classes}
+        />
+        <Notices classes={classes} />
+      </NoticesProvider>
     </Container>
   );
 }

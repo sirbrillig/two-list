@@ -13,6 +13,7 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import useKeyCode, { clamp } from './use-key-code';
+import { useNotices } from './notices';
 
 import google from './google.png';
 
@@ -43,6 +44,7 @@ export default function ItemDetail({ item, onClose, newItem, classes }) {
 }
 
 function ItemDetailContent({ item, onClose, newItem, classes }) {
+  const { showError } = useNotices();
   const [address, setAddress] = useState(item.address || '');
   const setName = event => setItemName(event.target.value);
   const [itemName, setItemName] = useState(item.label);
@@ -52,6 +54,7 @@ function ItemDetailContent({ item, onClose, newItem, classes }) {
 
   const saveChanges = () => {
     if (!itemName || !address) {
+      showError('Both name and address are required');
       return;
     }
     if (newItem) {

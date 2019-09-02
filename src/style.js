@@ -217,6 +217,17 @@ const useStyles = makeStyles(theme => {
       display: 'flex',
       justifyContent: 'space-between',
     },
+    noticeBox: {
+      [theme.breakpoints.up('sm')]: {
+        minWidth: 'auto',
+      },
+    },
+    noticeError: {
+      backgroundColor: theme.palette.error.dark,
+    },
+    noticeInfo: {
+      backgroundColor: theme.palette.primary.main,
+    },
   };
 });
 
