@@ -4,11 +4,10 @@ import React from 'react';
 import Card from '@material-ui/core/Paper';
 import CardHeader from '@material-ui/core/CardHeader';
 import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Logo from './logo';
 
-export default function LoggedOut({ classes, logIn }) {
+export default function LoggedOut({ classes, logIn, loginError }) {
   return (
     <Container className={classes.loggedOutRoot}>
       <Card elevation={1} className={classes.loggedOut}>
@@ -18,18 +17,11 @@ export default function LoggedOut({ classes, logIn }) {
         </div>
         <Divider />
         <div>
-          <TextField id="username" label="Username" margin="normal" fullWidth />
-        </div>
-        <div>
-          <TextField
-            id="password"
-            label="Password"
-            margin="normal"
-            fullWidth
-            type="password"
-          />
-        </div>
-        <div>
+          {loginError && (
+            <div className={classes.loggedOutError}>
+              {loginError.toString()}
+            </div>
+          )}
           <Button
             color="primary"
             onClick={logIn}

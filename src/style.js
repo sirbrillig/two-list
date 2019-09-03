@@ -228,6 +228,18 @@ const useStyles = makeStyles(theme => {
     noticeInfo: {
       backgroundColor: theme.palette.primary.main,
     },
+    loggedOutError: {
+      padding: '16px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    loading: {
+      padding: '16px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   };
 });
 

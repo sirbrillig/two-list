@@ -1,16 +1,17 @@
 /* @format */
-import Container from '@material-ui/core/Container';
-import React, { useState, useEffect, useRef } from 'react';
-import TargetList from './target-list';
-import SourceList from './source-list';
-import ItemDetail from './item-detail';
-import ActionToolbar from './action-toolbar';
-import MainToolbar from './main-toolbar';
+import React from 'react';
 import LoggedOut from './logged-out';
-import { NoticesProvider, Notices } from './notices';
+import LoggedIn from './logged-in';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import locations from './sample-locations';
+import { useAuth0 } from './react-auth0-wrapper';
+import { NoticesProvider, Notices } from './notices';
+import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Paper';
+import CardHeader from '@material-ui/core/CardHeader';
+import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Logo from './logo';
 
 // This must be imported last to have the styles injected low enough for
 // overrides to take place.
@@ -33,116 +34,66 @@ const voyageurGrey = {
 };
 
 export default function AppContainer() {
+  const classes = useStyles();
+  const {
+    isAuthenticated,
+    loginWithRedirect,
+    logout,
+    loading,
+    loginError,
+  } = useAuth0();
   const theme = createMuiTheme({
     palette: { primary: voyageurBlue, secondary: voyageurGrey },
   });
   return (
     <ThemeProvider theme={theme}>
-      <App />
+      <NoticesProvider>
+        <MainArea
+          classes={classes}
+          loading={loading}
+          isAuthenticated={isAuthenticated}
+          logout={logout}
+          loginWithRedirect={loginWithRedirect}
+          loginError={loginError}
+        />
+        <Notices classes={classes} />
+      </NoticesProvider>
     </ThemeProvider>
   );
 }
 
-function App() {
-  const classes = useStyles();
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  const [items, setItems] = useState(locations);
-  const [savedItems, setSavedItems] = useState([]);
-  const prevSavedItems = useRef(savedItems);
-  const [itemDetail, showItemDetail] = useState();
-  const [isShowingAddItem, setIsShowingAddItem] = useState(false);
-  const targetListRef = useRef();
-  const sendToTarget = item => {
-    const targetItem = { ...item, targetItemId: uniqueId() };
-    setSavedItems(saved => [...saved, targetItem]);
-  };
-  useEffect(() => {
-    if (!targetListRef.current) {
-      return;
-    }
-    if (savedItems.length <= prevSavedItems.current.length) {
-      return;
-    }
-    prevSavedItems.current = savedItems;
-    targetListRef.current.lastElementChild.scrollIntoView({
-      block: 'start',
-      behavior: 'smooth',
-    });
-  }, [savedItems]);
-  const removeFromTarget = item =>
-    setSavedItems(
-      savedItems.filter(it => it.targetItemId !== item.targetItemId),
+function MainArea({
+  classes,
+  loading,
+  isAuthenticated,
+  logout,
+  loginWithRedirect,
+  loginError,
+}) {
+  if (loading) {
+    return (
+      <Container className={classes.loggedOutRoot}>
+        <Card elevation={1} className={classes.loggedOut}>
+          <div className={classes.loggedOutHeader}>
+            <CardHeader title="Voyageur" subheader="Log In" />
+            <Logo className={classes.loggedOutLogo} />
+          </div>
+          <Divider />
+          <div className={classes.loading}>
+            <CircularProgress />
+          </div>
+        </Card>
+      </Container>
     );
-  const updateItem = updatedItem => {
-    setItems(
-      items.map(it => {
-        if (it.id === updatedItem.id) {
-          return updatedItem;
-        }
-        return it;
-      }),
-    );
-  };
-  const addNewItem = newItem => {
-    newItem.id = uniqueId();
-    setItems([...items, newItem]);
-  };
-  const onClose = ({ updatedItem, newItem }) => {
-    showItemDetail();
-    setIsShowingAddItem(false);
-    updatedItem && updateItem(updatedItem);
-    newItem && addNewItem(newItem);
-  };
-  const createNewItem = () => {
-    setIsShowingAddItem(true);
-  };
-  const clearItems = () => setSavedItems([]);
-  const isOverlayVisible = isShowingAddItem || itemDetail;
-
-  if (!isLoggedIn) {
-    return <LoggedOut classes={classes} logIn={() => setLoggedIn(true)} />;
   }
-
+  if (isAuthenticated) {
+    return <LoggedIn classes={classes} logOut={() => logout()} />;
+  }
   return (
-    <Container className={classes.root}>
-      <NoticesProvider>
-        <MainToolbar classes={classes} logOut={() => setLoggedIn(false)} />
-        <TargetList
-          items={savedItems}
-          removeFromTarget={removeFromTarget}
-          targetListRef={targetListRef}
-          classes={classes}
-        />
-        <SourceList
-          items={items}
-          sendToTarget={sendToTarget}
-          showItemDetail={showItemDetail}
-          active={!isOverlayVisible}
-          classes={classes}
-        />
-        <ItemDetail
-          item={itemDetail}
-          onClose={onClose}
-          newItem={isShowingAddItem}
-          classes={classes}
-        />
-        <ActionToolbar
-          createNewItem={createNewItem}
-          clearItems={clearItems}
-          classes={classes}
-        />
-        <Notices classes={classes} />
-      </NoticesProvider>
-    </Container>
-  );
-}
-
-function uniqueId() {
-  return (
-    Date.now() +
-    Math.random()
-      .toString()
-      .slice(2)
+    <LoggedOut
+      classes={classes}
+      loginError={loginError}
+      logIn={() => loginWithRedirect({})}
+    />
   );
 }
