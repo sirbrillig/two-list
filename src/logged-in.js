@@ -26,32 +26,32 @@ export default function LoggedIn({ classes, logOut }) {
       console.log('failed to get locations', error);
       showError(error.toString());
     });
-  }, []);
-  const [savedItems, setSavedItems] = useState([]);
-  const prevSavedItems = useRef(savedItems);
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
+  const [tripLocations, setTripLocations] = useState([]);
+  const prevSavedItems = useRef(tripLocations);
   const [itemDetail, showItemDetail] = useState();
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
   const targetListRef = useRef();
   const sendToTarget = item => {
     const targetItem = { ...item, targetItemId: uniqueId() };
-    setSavedItems(saved => [...saved, targetItem]);
+    setTripLocations(saved => [...saved, targetItem]);
   };
   useEffect(() => {
     if (!targetListRef.current) {
       return;
     }
-    if (savedItems.length <= prevSavedItems.current.length) {
+    if (tripLocations.length <= prevSavedItems.current.length) {
       return;
     }
-    prevSavedItems.current = savedItems;
+    prevSavedItems.current = tripLocations;
     targetListRef.current.lastElementChild.scrollIntoView({
       block: 'start',
       behavior: 'smooth',
     });
-  }, [savedItems]);
+  }, [tripLocations]);
   const removeFromTarget = item =>
-    setSavedItems(
-      savedItems.filter(it => it.targetItemId !== item.targetItemId),
+    setTripLocations(
+      tripLocations.filter(it => it.targetItemId !== item.targetItemId),
     );
   const updateItem = updatedItem => {
     setItems(
@@ -76,14 +76,14 @@ export default function LoggedIn({ classes, logOut }) {
   const createNewItem = () => {
     setIsShowingAddItem(true);
   };
-  const clearItems = () => setSavedItems([]);
+  const clearItems = () => setTripLocations([]);
   const isOverlayVisible = isShowingAddItem || itemDetail;
 
   return (
     <Container className={classes.root}>
       <MainToolbar classes={classes} logOut={logOut} />
       <TargetList
-        items={savedItems}
+        items={tripLocations}
         removeFromTarget={removeFromTarget}
         targetListRef={targetListRef}
         classes={classes}
