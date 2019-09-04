@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => {
   return {
-    root: {
+    loggedInRoot: {
       maxWidth: '400px',
       backgroundColor: theme.palette.primary.dark,
       padding: '0',

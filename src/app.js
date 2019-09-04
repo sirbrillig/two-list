@@ -13,11 +13,8 @@ import Divider from '@material-ui/core/Divider';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Logo from './logo';
 
-// This must be imported last to have the styles injected low enough for
-// overrides to take place.
-import useStyles from './style';
-
 import './app.css';
+import useStyles from './style';
 
 const voyageurBlue = {
   main: '#5989c1',
@@ -34,7 +31,17 @@ const voyageurGrey = {
 };
 
 export default function AppContainer() {
-  const classes = useStyles();
+  const theme = createMuiTheme({
+    palette: { primary: voyageurBlue, secondary: voyageurGrey },
+  });
+  return (
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  );
+}
+
+export function App() {
   const {
     isAuthenticated,
     loginWithRedirect,
@@ -42,33 +49,29 @@ export default function AppContainer() {
     loading,
     loginError,
   } = useAuth0();
-  const theme = createMuiTheme({
-    palette: { primary: voyageurBlue, secondary: voyageurGrey },
-  });
+  const classes = useStyles();
   return (
-    <ThemeProvider theme={theme}>
-      <NoticesProvider>
-        <MainArea
-          classes={classes}
-          loading={loading}
-          isAuthenticated={isAuthenticated}
-          logout={logout}
-          loginWithRedirect={loginWithRedirect}
-          loginError={loginError}
-        />
-        <Notices classes={classes} />
-      </NoticesProvider>
-    </ThemeProvider>
+    <NoticesProvider>
+      <MainArea
+        loading={loading}
+        isAuthenticated={isAuthenticated}
+        logout={logout}
+        loginWithRedirect={loginWithRedirect}
+        loginError={loginError}
+        classes={classes}
+      />
+      <Notices classes={classes} />
+    </NoticesProvider>
   );
 }
 
 function MainArea({
-  classes,
   loading,
   isAuthenticated,
   logout,
   loginWithRedirect,
   loginError,
+  classes,
 }) {
   if (loading) {
     return (

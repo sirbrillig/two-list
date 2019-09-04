@@ -17,33 +17,31 @@ import { useNotices } from './notices';
 
 import google from './google.png';
 
-export default function ItemDetail({ item, onClose, newItem, classes }) {
+export default function ItemDetail({
+  item,
+  onClose,
+  newItem,
+  deleteItem,
+  classes,
+}) {
   return (
     <Dialog
       open={!!item || newItem}
       fullScreen
       onClose={onClose}
       TransitionComponent={SlideTransition}>
-      {item ? (
-        <ItemDetailContent
-          item={item}
-          onClose={onClose}
-          newItem={newItem}
-          classes={classes}
-        />
-      ) : (
-        <ItemDetailContent
-          item={{ label: '', id: '' }}
-          onClose={onClose}
-          newItem={newItem}
-          classes={classes}
-        />
-      )}
+      <ItemDetailContent
+        item={item || { label: '', id: '' }}
+        onClose={onClose}
+        newItem={newItem}
+        classes={classes}
+        deleteItem={deleteItem}
+      />
     </Dialog>
   );
 }
 
-function ItemDetailContent({ item, onClose, newItem, classes }) {
+function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
   const { showError } = useNotices();
   const [address, setAddress] = useState(item.address || '');
   const setName = event => setItemName(event.target.value);
@@ -99,6 +97,16 @@ function ItemDetailContent({ item, onClose, newItem, classes }) {
           <AddressAutosuggestInput value={address} onChange={setAddress} />
         </div>
         <PoweredByGoogle classes={classes} />
+        {newItem ? null : (
+          <Button
+            color="primary"
+            fullWidth
+            size="large"
+            variant="contained"
+            onClick={deleteItem}>
+            Delete
+          </Button>
+        )}
       </DialogContent>
     </React.Fragment>
   );

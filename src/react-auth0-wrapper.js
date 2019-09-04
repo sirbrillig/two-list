@@ -52,7 +52,7 @@ export const Auth0Provider = ({
       setError(error);
       setLoading(false);
     });
-  }, []);
+  }, []); // eslint-disable-line 
 
   const loginWithPopup = async (params = {}) => {
     setPopupOpen(true);
