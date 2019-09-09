@@ -8,18 +8,8 @@ import ActionToolbar from './action-toolbar';
 import MainToolbar from './main-toolbar';
 import useVoyageurSync from './voyageur-sync';
 
-export default function LoggedIn({ classes, logOut }) {
-  const [items, setItems] = useVoyageurSync();
-
-  const [tripLocations, setTripLocations] = useState([]);
+function useScrollToItem(tripLocations, targetListRef) {
   const prevSavedItems = useRef(tripLocations);
-  const [itemDetail, showItemDetail] = useState();
-  const [isShowingAddItem, setIsShowingAddItem] = useState(false);
-  const targetListRef = useRef();
-  const sendToTarget = item => {
-    const targetItem = { ...item, targetItemId: uniqueId() };
-    setTripLocations(saved => [...saved, targetItem]);
-  };
   useEffect(() => {
     if (!targetListRef.current) {
       return;
@@ -32,12 +22,28 @@ export default function LoggedIn({ classes, logOut }) {
       block: 'start',
       behavior: 'smooth',
     });
-  }, [tripLocations]);
+  }, [targetListRef, tripLocations]);
+}
+
+export default function LoggedIn({ classes, logOut }) {
+  const [items, setItems] = useVoyageurSync();
+
+  const [tripLocations, setTripLocations] = useState([]);
+  const [itemDetail, showItemDetail] = useState();
+  const [isShowingAddItem, setIsShowingAddItem] = useState(false);
+  const targetListRef = useRef();
+  useScrollToItem(tripLocations, targetListRef);
+
+  const sendToTarget = item => {
+    const targetItem = { ...item, targetItemId: uniqueId() };
+    setTripLocations(saved => [...saved, targetItem]);
+  };
   const removeFromTarget = item =>
     setTripLocations(
       tripLocations.filter(it => it.targetItemId !== item.targetItemId),
     );
   const updateItem = updatedItem => {
+    console.log('updating item', updatedItem);
     setItems(
       items.map(it => {
         if (it.id === updatedItem.id) {
@@ -61,6 +67,7 @@ export default function LoggedIn({ classes, logOut }) {
     setIsShowingAddItem(true);
   };
   const deleteItem = () => {
+    console.log('deleting item', itemDetail);
     setItems(items.filter(item => item.id !== itemDetail.id));
     showItemDetail();
     setIsShowingAddItem(false);

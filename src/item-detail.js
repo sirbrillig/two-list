@@ -50,6 +50,10 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
     setItemName(item.label);
   }, [item]);
 
+  const confirmDelete = () => {
+    // TODO: show "are you sure?"
+    deleteItem();
+  };
   const saveChanges = () => {
     if (!itemName || !address) {
       showError('Both name and address are required');
@@ -97,13 +101,13 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
           <AddressAutosuggestInput value={address} onChange={setAddress} />
         </div>
         <PoweredByGoogle classes={classes} />
-        {newItem ? null : (
+        {newItem ? null : ( // TODO: move this to bottom of page
           <Button
-            color="primary"
+            color="secondary"
             fullWidth
             size="large"
-            variant="contained"
-            onClick={deleteItem}>
+            variant="outlined"
+            onClick={confirmDelete}>
             Delete
           </Button>
         )}

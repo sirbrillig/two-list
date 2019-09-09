@@ -4,6 +4,7 @@ import {
   listLocations,
   createNewLocation,
   deleteLocationFromLibrary,
+  updateLocationParams,
 } from './voyageur-api';
 import { useAuth0 } from './react-auth0-wrapper';
 import { useNotices } from './notices';
@@ -21,6 +22,13 @@ function translateItemsToRemote(items) {
     name: item.label,
     address: item.address,
   }));
+}
+
+function translateItemToRemote(item) {
+  return {
+    name: item.label,
+    address: item.address,
+  };
 }
 
 function areArraysEmpty(...arrays) {
@@ -68,7 +76,35 @@ async function syncItemsToServer({ getTokenSilently, dispatch, state }) {
   const itemsToDeleteFromServer = state.serverItems.filter(
     item => !clientItemIds.includes(item.id),
   );
-  if (areArraysEmpty(itemsToAddToServer, itemsToDeleteFromServer)) {
+  const itemsToReplaceOnServer = state.items.filter(clientItem => {
+    const matchingItems = state.serverItems.filter(
+      serverItem => clientItem.id === serverItem.id,
+    );
+    if (matchingItems.length > 1) {
+      throw new Error(
+        'More than one id matching location',
+        clientItem.id,
+        ':',
+        matchingItems,
+      );
+    }
+    if (matchingItems.length === 0) {
+      return false;
+    }
+    const matchingItem = matchingItems[0];
+    return (
+      matchingItem.address !== clientItem.address ||
+      matchingItem.label !== clientItem.label
+    );
+  });
+  if (
+    areArraysEmpty(
+      itemsToAddToServer,
+      itemsToDeleteFromServer,
+      itemsToReplaceOnServer,
+    )
+  ) {
+    console.log('no changes to sync');
     return;
   }
   console.log(
@@ -76,6 +112,8 @@ async function syncItemsToServer({ getTokenSilently, dispatch, state }) {
     itemsToAddToServer,
     'removing',
     itemsToDeleteFromServer,
+    'changing',
+    itemsToReplaceOnServer,
   );
   await Promise.all([
     ...translateItemsToRemote(itemsToAddToServer).map(item =>
@@ -83,6 +121,9 @@ async function syncItemsToServer({ getTokenSilently, dispatch, state }) {
     ),
     ...itemsToDeleteFromServer.map(item =>
       deleteLocationFromLibrary(token, item),
+    ),
+    ...itemsToReplaceOnServer.map(item =>
+      updateLocationParams(token, item, translateItemToRemote(item)),
     ),
   ]);
   const locations = await listLocations(token);
@@ -103,7 +144,6 @@ async function fetchItemsFromServer({ getTokenSilently, dispatch }) {
 }
 
 export default function useVoyageurSync() {
-  // TODO: handle changes to locations as well
   const [state, dispatch] = useReducer(voyageurSyncReducer, {
     items: [],
     serverItems: [],
@@ -121,7 +161,7 @@ export default function useVoyageurSync() {
     fetchItemsFromServer({
       getTokenSilently,
       dispatch,
-    }).catch(error => showError(error.toString()));
+    }).catch(error => showError(error));
   }, [getTokenSilently, showError]);
 
   useEffect(() => {
@@ -129,7 +169,7 @@ export default function useVoyageurSync() {
       getTokenSilently,
       dispatch,
       state,
-    }).catch(error => showError(error.toString()));
+    }).catch(error => showError(error));
   }, [getTokenSilently, showError, state]);
 
   return [items, setItems];

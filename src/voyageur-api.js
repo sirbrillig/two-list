@@ -64,7 +64,7 @@ export function updateLocationParams(token, location, params) {
     throw new Error('Token is required');
   }
   return new Promise((resolve, reject) => {
-    const url = `${baseUrl}/secured/locations/${location._id || location}`;
+    const url = `${baseUrl}/secured/locations/${location.id}`;
     request
       .put(url)
       .send(params)

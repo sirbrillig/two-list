@@ -9,7 +9,13 @@ export function useNotices() {
   const { currentNotice, setCurrentNotice } = useContext(NoticeContext);
 
   const showError = useCallback(
-    message => setCurrentNotice({ type: 'error', message }),
+    message => {
+      console.log('Error!', message);
+      setCurrentNotice({
+        type: 'error',
+        message: message.toString ? message.toString() : message,
+      });
+    },
     [setCurrentNotice],
   );
 
