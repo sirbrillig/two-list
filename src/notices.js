@@ -1,5 +1,5 @@
 /* @format */
-import React, { useState, useContext, createContext } from 'react';
+import React, { useState, useCallback, useContext, createContext } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 
@@ -8,8 +8,13 @@ const NoticeContext = createContext({ currentNotice: null });
 export function useNotices() {
   const { currentNotice, setCurrentNotice } = useContext(NoticeContext);
 
+  const showError = useCallback(
+    message => setCurrentNotice({ type: 'error', message }),
+    [setCurrentNotice],
+  );
+
   return {
-    showError: message => setCurrentNotice({ type: 'error', message }),
+    showError,
     currentNotice,
     setCurrentNotice,
   };

@@ -6,57 +6,11 @@ import SourceList from './source-list';
 import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
 import MainToolbar from './main-toolbar';
-import {
-  listLocations,
-  createNewLocation,
-  deleteLocationFromLibrary,
-} from './voyageur-api';
-import { useAuth0 } from './react-auth0-wrapper';
-import { useNotices } from './notices';
+import useVoyageurSync from './voyageur-sync';
 
 export default function LoggedIn({ classes, logOut }) {
-  const { showError } = useNotices();
-  const [items, setItems] = useState([]);
-  const [serverItems, setServerItems] = useState([]);
-  const { getTokenSilently } = useAuth0();
-  useEffect(() => {
-    async function getLocations() {
-      console.log('fetching items from server');
-      const token = await getTokenSilently();
-      const locations = await listLocations(token);
-      setServerItems(translateRemoteItems(locations));
-    }
-    getLocations().catch(error => showError(error.toString()));
-  }, []); //eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    async function syncItemsToServer() {
-      const token = await getTokenSilently();
-      const serverItemIds = serverItems.map(item => item.id);
-      const itemIds = items.map(item => item.id);
-      const itemsNotOnClient = serverItems.filter(
-        item => !itemIds.includes(item.id),
-      );
-      const itemsNotOnServer = items.filter(
-        item => !serverItemIds.includes(item.id),
-      );
-      if (!itemsNotOnServer.length && !itemsNotOnClient.length) {
-        return;
-      }
-      console.log('syncing items with server');
-      await Promise.all([
-        ...translateItemsToRemote(itemsNotOnServer).map(item =>
-          createNewLocation(token, item),
-        ),
-        ...itemsNotOnClient.map(item => deleteLocationFromLibrary(token, item)),
-      ]);
-      const locations = await listLocations(token);
-      setServerItems(translateRemoteItems(locations));
-    }
-    syncItemsToServer().catch(error => showError(error.toString()));
-  }, [items]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    setItems(serverItems);
-  }, [serverItems]);
+  const [items, setItems] = useVoyageurSync();
+
   const [tripLocations, setTripLocations] = useState([]);
   const prevSavedItems = useRef(tripLocations);
   const [itemDetail, showItemDetail] = useState();
@@ -153,19 +107,4 @@ function uniqueId() {
       .toString()
       .slice(2)
   );
-}
-
-function translateRemoteItems(items) {
-  return items.map(item => ({
-    label: item.name,
-    address: item.address,
-    id: item._id,
-  }));
-}
-
-function translateItemsToRemote(items) {
-  return items.map(item => ({
-    name: item.label,
-    address: item.address,
-  }));
 }
