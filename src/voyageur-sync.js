@@ -23,10 +23,14 @@ function translateItemsToRemote(items) {
   }));
 }
 
+function areArraysEmpty(...arrays) {
+  return arrays.filter(array => array.length > 0).length === 0;
+}
+
 function doArraysDiffer(array1, array2) {
   const diff1 = array1.filter(item => !array2.includes(item));
   const diff2 = array2.filter(item => !array1.includes(item));
-  return diff1.length !== 0 || diff2.length !== 0;
+  return !areArraysEmpty(diff1, diff2);
 }
 
 function voyageurSyncReducer(state, action) {
@@ -64,10 +68,15 @@ async function syncItemsToServer({ getTokenSilently, dispatch, state }) {
   const itemsToDeleteFromServer = state.serverItems.filter(
     item => !clientItemIds.includes(item.id),
   );
-  if (!itemsToAddToServer.length && !itemsToDeleteFromServer.length) {
+  if (areArraysEmpty(itemsToAddToServer, itemsToDeleteFromServer)) {
     return;
   }
-  console.log('syncing items with server');
+  console.log(
+    'syncing items with server; adding',
+    itemsToAddToServer,
+    'removing',
+    itemsToDeleteFromServer,
+  );
   await Promise.all([
     ...translateItemsToRemote(itemsToAddToServer).map(item =>
       createNewLocation(token, item),
@@ -94,6 +103,7 @@ async function fetchItemsFromServer({ getTokenSilently, dispatch }) {
 }
 
 export default function useVoyageurSync() {
+  // TODO: handle changes to locations as well
   const [state, dispatch] = useReducer(voyageurSyncReducer, {
     items: [],
     serverItems: [],
