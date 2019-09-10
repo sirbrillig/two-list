@@ -1,10 +1,11 @@
 /* @format */
-import { useEffect, useReducer } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import {
   listLocations,
   createNewLocation,
   deleteLocationFromLibrary,
   updateLocationParams,
+  getDistanceBetween,
 } from './voyageur-api';
 import { useAuth0 } from './react-auth0-wrapper';
 import { useNotices } from './notices';
@@ -173,4 +174,42 @@ export default function useVoyageurSync() {
   }, [getTokenSilently, showError, state]);
 
   return [items, setItems];
+}
+
+export function useDistance(locations) {
+  const { showError } = useNotices();
+  const { getTokenSilently } = useAuth0();
+  const [totalMeters, setTotalMeters] = useState(0);
+  console.log('getting distance', locations);
+
+  useEffect(() => {
+    async function getDistances() {
+      console.log('fetching distance', locations);
+      const token = await getTokenSilently();
+      const distances = await Promise.all(
+        getAddressPairs(locations).map(({ start, dest }) => {
+          return getDistanceBetween(token, start, dest);
+        }),
+      );
+      console.log('distances calculated');
+      setTotalMeters(
+        distances.reduce((total, distance) => total + distance, 0),
+      );
+    }
+
+    getDistances().catch(error => showError(error));
+  }, [getTokenSilently, showError, locations]);
+
+  return totalMeters;
+}
+
+function getAddressPairs(locations) {
+  let prevLocation = null;
+  return locations.reduce((pairs, location) => {
+    if (prevLocation) {
+      pairs.push({ start: prevLocation.address, dest: location.address });
+    }
+    prevLocation = location;
+    return pairs;
+  }, []);
 }

@@ -11,6 +11,11 @@ import StepIcon from '@material-ui/core/StepIcon';
 import IconButton from '@material-ui/core/IconButton';
 import { useTransition, animated } from 'react-spring';
 import TotalHeader from './total-header';
+import { useDistance } from './voyageur-sync';
+
+function getMilesFromMeters(meters) {
+  return (meters * 0.000621371192).toFixed(2);
+}
 
 export default function TargetList({
   items,
@@ -18,6 +23,9 @@ export default function TargetList({
   targetListRef,
   classes,
 }) {
+  // TODO: show loading while distance is loading
+  const totalMeters = useDistance(items);
+  const totalDistance = getMilesFromMeters(totalMeters);
   // We pad the bottom of the list to get the remove animation to look good
   const fakeItem = {
     id: 'abcdefghijklmnop',
@@ -61,7 +69,6 @@ export default function TargetList({
       </TargetListItem>
     </animated.div>
   ));
-  const totalDistance = items.length ? 7 * items.length : 0;
   return (
     <Paper elevation={0} square={true} className={classes.targetListBox}>
       <TotalHeader totalDistance={totalDistance} classes={classes} />
