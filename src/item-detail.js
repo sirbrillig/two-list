@@ -2,6 +2,7 @@
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -80,6 +81,14 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
           <DialogTitle className={classes.itemDetailTitle}>
             {newItem ? 'Add Location' : 'Edit Location'}
           </DialogTitle>
+          {newItem ? null : (
+            <IconButton
+              color="inherit"
+              aria-label="delete"
+              onClick={confirmDelete}>
+              <DeleteIcon />
+            </IconButton>
+          )}
           <Button color="inherit" onClick={saveChanges}>
             save
           </Button>
@@ -101,16 +110,6 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
           <AddressAutosuggestInput value={address} onChange={setAddress} />
         </div>
         <PoweredByGoogle classes={classes} />
-        {newItem ? null : ( // TODO: move this to bottom of page
-          <Button
-            color="secondary"
-            fullWidth
-            size="large"
-            variant="outlined"
-            onClick={confirmDelete}>
-            Delete
-          </Button>
-        )}
       </DialogContent>
     </React.Fragment>
   );
