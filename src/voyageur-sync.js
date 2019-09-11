@@ -177,6 +177,7 @@ export default function useVoyageurSync() {
 }
 
 export function useDistance(locations) {
+  const [isLoading, setLoading] = useState(false);
   const { showError } = useNotices();
   const { getTokenSilently } = useAuth0();
   const [totalMeters, setTotalMeters] = useState(0);
@@ -184,6 +185,7 @@ export function useDistance(locations) {
 
   useEffect(() => {
     async function getDistances() {
+      setLoading(true);
       console.log('fetching distance', locations);
       const token = await getTokenSilently();
       const distances = await Promise.all(
@@ -195,12 +197,13 @@ export function useDistance(locations) {
       setTotalMeters(
         distances.reduce((total, distance) => total + distance, 0),
       );
+      setLoading(false);
     }
 
     getDistances().catch(error => showError(error));
   }, [getTokenSilently, showError, locations]);
 
-  return totalMeters;
+  return { totalMeters, isLoading };
 }
 
 function getAddressPairs(locations) {

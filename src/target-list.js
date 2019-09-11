@@ -23,8 +23,7 @@ export default function TargetList({
   targetListRef,
   classes,
 }) {
-  // TODO: show loading while distance is loading
-  const totalMeters = useDistance(items);
+  const { totalMeters, isLoading } = useDistance(items);
   const totalDistance = getMilesFromMeters(totalMeters);
   // We pad the bottom of the list to get the remove animation to look good
   const fakeItem = {
@@ -71,7 +70,11 @@ export default function TargetList({
   ));
   return (
     <Paper elevation={0} square={true} className={classes.targetListBox}>
-      <TotalHeader totalDistance={totalDistance} classes={classes} />
+      <TotalHeader
+        totalDistance={totalDistance}
+        isLoading={isLoading}
+        classes={classes}
+      />
       <Divider className={classes.targetListHeaderDivider} />
       <List className={classes.targetList} ref={targetListRef}>
         {itemElements}

@@ -3,8 +3,8 @@ import React from 'react';
 import CardHeader from '@material-ui/core/CardHeader';
 import Icon from '@material-ui/core/Icon';
 
-export default function TotalHeader({ totalDistance, classes }) {
-  const subText = `${totalDistance} miles`;
+export default function TotalHeader({ totalDistance, isLoading, classes }) {
+  const subText = isLoading ? 'Loading...' : `${totalDistance} miles`;
   const title = (
     <React.Fragment>
       Total
