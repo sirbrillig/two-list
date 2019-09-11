@@ -78,21 +78,12 @@ async function syncItemsToServer({ getTokenSilently, dispatch, state }) {
     item => !clientItemIds.includes(item.id),
   );
   const itemsToReplaceOnServer = state.items.filter(clientItem => {
-    const matchingItems = state.serverItems.filter(
+    const matchingItem = state.serverItems.find(
       serverItem => clientItem.id === serverItem.id,
     );
-    if (matchingItems.length > 1) {
-      throw new Error(
-        'More than one id matching location',
-        clientItem.id,
-        ':',
-        matchingItems,
-      );
-    }
-    if (matchingItems.length === 0) {
+    if (!matchingItem) {
       return false;
     }
-    const matchingItem = matchingItems[0];
     return (
       matchingItem.address !== clientItem.address ||
       matchingItem.label !== clientItem.label
