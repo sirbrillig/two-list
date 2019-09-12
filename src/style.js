@@ -240,6 +240,22 @@ const useStyles = makeStyles(theme => {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    emptyLocationsList: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%',
+      flexDirection: 'column',
+    },
+    EmptyLocationsListTitle: {
+      fontWeight: 'bold',
+    },
+    emptyLocationsListIcon: {
+      fontSize: '6rem',
+      [theme.breakpoints.up('md')]: {
+        fontSize: '14rem',
+      },
+    },
   };
 });
 

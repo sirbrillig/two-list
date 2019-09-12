@@ -72,8 +72,24 @@ export default function SourceList({
     <Card elevation={1} className={classes.sourceListBox}>
       <CardHeader title="Places" />
       <Divider />
-      <List className={classes.sourceList}>{itemsWithSearch}</List>
+      {items.length ? (
+        <List className={classes.sourceList}>{itemsWithSearch}</List>
+      ) : (
+        <EmptyLocationsList classes={classes} />
+      )}
     </Card>
+  );
+}
+
+function EmptyLocationsList({ classes }) {
+  return (
+    <div className={classes.emptyLocationsList}>
+      <Icon fontSize="large" className={classes.emptyLocationsListIcon}>
+        emoji_transportation
+      </Icon>
+      <div className={classes.EmptyLocationsListTitle}>No places yet!</div>
+      <p>Add a place and it will appear here.</p>
+    </div>
   );
 }
 
