@@ -76,6 +76,7 @@ const useStyles = makeStyles(theme => {
       flex: 2.3,
       overflowY: 'hidden',
       display: 'flex',
+      position: 'relative',
       flexDirection: 'column',
       borderBottomRightRadius: 0,
       borderBottomLeftRadius: 0,
@@ -255,6 +256,11 @@ const useStyles = makeStyles(theme => {
       [theme.breakpoints.up('md')]: {
         fontSize: '14rem',
       },
+    },
+    addPlaceFab: {
+      position: 'absolute',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
     },
   };
 });
