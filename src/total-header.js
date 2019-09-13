@@ -22,7 +22,7 @@ export default function TotalHeader({
   const title = (
     <React.Fragment>
       <IconButton
-        classes={{ root: classes.sourceListAddButton }}
+        classes={{ root: classes.totalHeaderButton }}
         color="inherit"
         aria-label="clear trip"
         onClick={clearItems}>

@@ -127,6 +127,7 @@ const useStyles = makeStyles(theme => {
     },
     sourceListAddButton: {
       padding: '0',
+      color: theme.palette.primary.main,
     },
     sourceListHeaderContent: {
       display: 'flex',
@@ -143,6 +144,10 @@ const useStyles = makeStyles(theme => {
     totalHeaderIcon: {
       verticalAlign: 'bottom',
       marginRight: '10px',
+    },
+    totalHeaderButton: {
+      padding: '0',
+      color: theme.palette.primary.contrastText,
     },
     suggestion: {
       display: 'block',
