@@ -130,6 +130,13 @@ const useStyles = makeStyles(theme => {
     itemDetailButtonIcon: {
       marginRight: theme.spacing(1),
     },
+    sourceListAddButton: {
+      padding: '0'
+    },
+    sourceListHeaderContent: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
     totalHeaderDistance: {
       color: theme.palette.primary.contrastText,
       fontSize: '1.4em',

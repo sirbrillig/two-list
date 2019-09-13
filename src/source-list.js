@@ -17,6 +17,7 @@ export default function SourceList({
   sendToTarget,
   showItemDetail,
   shouldShowGuide,
+  createNewItem,
   active,
   classes,
 }) {
@@ -71,12 +72,23 @@ export default function SourceList({
   const guideElement = (
     <GuideElement key="guide-element" classes={classes} items={items} />
   );
+  const addButton = (
+    <IconButton classes={{ root: classes.sourceListAddButton }} color="inherit" aria-label="add new place" onClick={createNewItem}>
+      <Icon fontSize="large">add_circle</Icon>
+    </IconButton>
+  );
   const itemsWithSearch = shouldShowGuide
     ? [searchItem, ...itemElements, guideElement]
     : [searchItem, ...itemElements];
   return (
     <Card elevation={1} className={classes.sourceListBox}>
-      <CardHeader title="Places" />
+      <CardHeader
+        classes={{
+          content: classes.sourceListHeaderContent,
+        }}
+        title="Places"
+        subheader={addButton}
+      />
       <Divider />
       {items.length ? (
         <List className={classes.sourceList}>{itemsWithSearch}</List>
