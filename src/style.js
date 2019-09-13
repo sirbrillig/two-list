@@ -241,6 +241,16 @@ const useStyles = makeStyles(theme => {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    guideElement: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column',
+      padding: '1em',
+    },
+    guideElementTitle: {
+      fontWeight: 'bold',
+    },
     emptyLocationsList: {
       display: 'flex',
       justifyContent: 'center',
@@ -248,7 +258,7 @@ const useStyles = makeStyles(theme => {
       height: '100%',
       flexDirection: 'column',
     },
-    EmptyLocationsListTitle: {
+    emptyLocationsListTitle: {
       fontWeight: 'bold',
     },
     emptyLocationsListIcon: {

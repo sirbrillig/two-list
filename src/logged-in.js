@@ -7,6 +7,7 @@ import ItemDetail from './item-detail';
 import ActionToolbar from './action-toolbar';
 import MainToolbar from './main-toolbar';
 import useVoyageurSync from './voyageur-sync';
+import useLocalStorageState from './local-storage';
 
 function useScrollToItem(tripLocations, targetListRef) {
   const prevSavedItems = useRef(tripLocations);
@@ -25,36 +26,6 @@ function useScrollToItem(tripLocations, targetListRef) {
   }, [targetListRef, tripLocations]);
 }
 
-function useLocalStorageState(initialValue, key) {
-  const [state, setState] = useState(initialValue);
-  useEffect(() => {
-    let storedValue;
-    try {
-      storedValue = window.localStorage.getItem(key);
-      if (storedValue) {
-        setState(JSON.parse(storedValue));
-      }
-    } catch (error) {
-      console.log('reading local state failed', error);
-      return;
-    }
-  }, [key]);
-  function setAndSaveState(newValue) {
-    if (typeof newValue === 'function') {
-      newValue = newValue(state);
-    }
-    try {
-      const encodedValue = JSON.stringify(newValue);
-      console.log('saving local state', newValue, 'to key', key);
-      window.localStorage.setItem(key, encodedValue);
-    } catch (error) {
-      console.log('saving local state failed', error);
-    }
-    setState(newValue);
-  }
-  return [state, setAndSaveState];
-}
-
 export default function LoggedIn({ classes, logOut }) {
   const [items, setItems] = useVoyageurSync();
 
@@ -66,6 +37,15 @@ export default function LoggedIn({ classes, logOut }) {
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
   const targetListRef = useRef();
   useScrollToItem(tripLocations, targetListRef);
+  const [shouldShowGuide, setShowGuide] = useLocalStorageState(
+    true,
+    'voyageurSeenGuide',
+  );
+  useEffect(() => {
+    if (tripLocations.length > 1) {
+      setShowGuide(false);
+    }
+  }, [setShowGuide, tripLocations]);
 
   const sendToTarget = item => {
     const targetItem = { ...item, targetItemId: uniqueId() };
@@ -122,6 +102,7 @@ export default function LoggedIn({ classes, logOut }) {
         sendToTarget={sendToTarget}
         showItemDetail={showItemDetail}
         createNewItem={createNewItem}
+        shouldShowGuide={shouldShowGuide}
         active={!isOverlayVisible}
         classes={classes}
       />

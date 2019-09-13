@@ -18,6 +18,7 @@ export default function SourceList({
   sendToTarget,
   showItemDetail,
   createNewItem,
+  shouldShowGuide,
   active,
   classes,
 }) {
@@ -69,7 +70,12 @@ export default function SourceList({
       key="search-element"
     />
   );
-  const itemsWithSearch = [searchItem, ...itemElements];
+  const guideElement = (
+    <GuideElement key="guide-element" classes={classes} items={items} />
+  );
+  const itemsWithSearch = shouldShowGuide
+    ? [searchItem, ...itemElements, guideElement]
+    : [searchItem, ...itemElements];
   return (
     <Card elevation={1} className={classes.sourceListBox}>
       <CardHeader title="Places" />
@@ -90,13 +96,32 @@ export default function SourceList({
   );
 }
 
+function GuideElement({ classes, items }) {
+  if (items.length === 1) {
+    return (
+      <div className={classes.guideElement}>
+        <div className={classes.guideElementTitle}>Almost there!</div>
+        <Icon fontSize="large">thumb_up</Icon>
+        <p>Add another place and then you can start finding distances!</p>
+      </div>
+    );
+  }
+  return (
+    <div className={classes.guideElement}>
+      <div className={classes.guideElementTitle}>Start your trip!</div>
+      <Icon fontSize="large">thumb_up</Icon>
+      <p>Click the icons above to add places to your trip.</p>
+    </div>
+  );
+}
+
 function EmptyLocationsList({ classes }) {
   return (
     <div className={classes.emptyLocationsList}>
       <Icon fontSize="large" className={classes.emptyLocationsListIcon}>
         emoji_transportation
       </Icon>
-      <div className={classes.EmptyLocationsListTitle}>No places yet!</div>
+      <div className={classes.emptyLocationsListTitle}>No places yet!</div>
       <p>Add a place and it will appear here.</p>
     </div>
   );
