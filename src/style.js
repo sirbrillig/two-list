@@ -39,12 +39,7 @@ const useStyles = makeStyles(theme => {
       zIndex: 2,
       boxShadow: theme.shadows[2],
       [theme.breakpoints.up('md')]: {
-        order: 1,
-        height: '100vh',
-        justifyContent: 'flex-start',
-        flexDirection: 'column',
-        padding: '0.5em 0 0 0',
-        boxSizing: 'border-box',
+        display: 'none',
       },
     },
     actionToolbarButtonIcon: {
