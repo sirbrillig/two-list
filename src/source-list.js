@@ -9,7 +9,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
-import Fab from '@material-ui/core/Fab';
 import TextField from '@material-ui/core/TextField';
 import useKeyCode, { clamp } from './use-key-code';
 
@@ -17,7 +16,6 @@ export default function SourceList({
   items,
   sendToTarget,
   showItemDetail,
-  createNewItem,
   shouldShowGuide,
   active,
   classes,
@@ -85,13 +83,6 @@ export default function SourceList({
       ) : (
         <EmptyLocationsList classes={classes} />
       )}
-      <Fab
-        color="primary"
-        aria-label="add"
-        className={classes.addPlaceFab}
-        onClick={createNewItem}>
-        <Icon size="large">add</Icon>
-      </Fab>
     </Card>
   );
 }

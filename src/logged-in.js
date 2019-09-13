@@ -101,7 +101,6 @@ export default function LoggedIn({ classes, logOut }) {
         items={items}
         sendToTarget={sendToTarget}
         showItemDetail={showItemDetail}
-        createNewItem={createNewItem}
         shouldShowGuide={shouldShowGuide}
         active={!isOverlayVisible}
         classes={classes}

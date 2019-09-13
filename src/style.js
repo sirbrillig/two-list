@@ -267,11 +267,6 @@ const useStyles = makeStyles(theme => {
         fontSize: '14rem',
       },
     },
-    addPlaceFab: {
-      position: 'absolute',
-      bottom: theme.spacing(2),
-      right: theme.spacing(2),
-    },
   };
 });
 
