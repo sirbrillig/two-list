@@ -95,6 +95,7 @@ export default function LoggedIn({ classes, logOut }) {
         items={tripLocations}
         removeFromTarget={removeFromTarget}
         targetListRef={targetListRef}
+        clearItems={clearItems}
         classes={classes}
       />
       <SourceList

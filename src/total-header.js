@@ -2,15 +2,32 @@
 import React from 'react';
 import CardHeader from '@material-ui/core/CardHeader';
 import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 
-export default function TotalHeader({ totalDistance, isLoading, classes }) {
+export default function TotalHeader({
+  totalDistance,
+  isLoading,
+  clearItems,
+  classes,
+}) {
   const subText = isLoading ? 'Loading...' : `${totalDistance} miles`;
-  const title = (
+  const subheader = (
     <React.Fragment>
-      Total
       <Icon fontSize="large" className={classes.totalHeaderIcon}>
         drive_eta
       </Icon>
+      {subText}
+    </React.Fragment>
+  );
+  const title = (
+    <React.Fragment>
+      <IconButton
+        classes={{ root: classes.sourceListAddButton }}
+        color="inherit"
+        aria-label="clear trip"
+        onClick={clearItems}>
+        <Icon fontSize="large">delete_sweep</Icon>
+      </IconButton>
     </React.Fragment>
   );
   return (
@@ -20,7 +37,7 @@ export default function TotalHeader({ totalDistance, isLoading, classes }) {
         subheader: classes.totalHeaderDistance,
       }}
       title={title}
-      subheader={subText}
+      subheader={subheader}
     />
   );
 }

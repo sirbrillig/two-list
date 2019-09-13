@@ -73,7 +73,11 @@ export default function SourceList({
     <GuideElement key="guide-element" classes={classes} items={items} />
   );
   const addButton = (
-    <IconButton classes={{ root: classes.sourceListAddButton }} color="inherit" aria-label="add new place" onClick={createNewItem}>
+    <IconButton
+      classes={{ root: classes.sourceListAddButton }}
+      color="inherit"
+      aria-label="add new place"
+      onClick={createNewItem}>
       <Icon fontSize="large">add_circle</Icon>
     </IconButton>
   );

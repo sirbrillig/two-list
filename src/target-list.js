@@ -20,6 +20,7 @@ function getMilesFromMeters(meters) {
 export default function TargetList({
   items,
   removeFromTarget,
+  clearItems,
   targetListRef,
   classes,
 }) {
@@ -73,6 +74,7 @@ export default function TargetList({
       <TotalHeader
         totalDistance={totalDistance}
         isLoading={isLoading}
+        clearItems={clearItems}
         classes={classes}
       />
       <Divider className={classes.targetListHeaderDivider} />
