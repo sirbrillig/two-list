@@ -127,6 +127,9 @@ const useStyles = makeStyles(theme => {
     itemDetailTitle: {
       flex: '1',
     },
+    itemDetailButtonIcon: {
+      marginRight: theme.spacing(1),
+    },
     totalHeaderDistance: {
       color: theme.palette.primary.contrastText,
       fontSize: '1.4em',

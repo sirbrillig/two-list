@@ -1,6 +1,7 @@
 /* @format */
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
@@ -82,14 +83,13 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
             {newItem ? 'Add Location' : 'Edit Location'}
           </DialogTitle>
           {newItem ? null : (
-            <IconButton
-              color="inherit"
-              aria-label="delete"
-              onClick={confirmDelete}>
-              <DeleteIcon />
-            </IconButton>
+            <Button color="inherit" aria-label="delete" onClick={confirmDelete}>
+              <DeleteIcon className={classes.itemDetailButtonIcon} />
+              delete
+            </Button>
           )}
-          <Button color="inherit" onClick={saveChanges}>
+          <Button aria-label="save" color="inherit" onClick={saveChanges}>
+            <SaveIcon className={classes.itemDetailButtonIcon} />
             save
           </Button>
         </Toolbar>
