@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import TargetList from './target-list';
 import SourceList from './source-list';
 import ItemDetail from './item-detail';
-import ActionToolbar from './action-toolbar';
 import MainToolbar from './main-toolbar';
 import useVoyageurSync from './voyageur-sync';
 import useLocalStorageState from './local-storage';
@@ -91,34 +90,31 @@ export default function LoggedIn({ classes, logOut }) {
   return (
     <Container className={classes.loggedInRoot}>
       <MainToolbar classes={classes} logOut={logOut} />
-      <TargetList
-        items={tripLocations}
-        removeFromTarget={removeFromTarget}
-        targetListRef={targetListRef}
-        clearItems={clearItems}
-        classes={classes}
-      />
-      <SourceList
-        items={items}
-        sendToTarget={sendToTarget}
-        showItemDetail={showItemDetail}
-        shouldShowGuide={shouldShowGuide}
-        createNewItem={createNewItem}
-        active={!isOverlayVisible}
-        classes={classes}
-      />
-      <ItemDetail
-        item={itemDetail}
-        onClose={onClose}
-        newItem={isShowingAddItem}
-        deleteItem={deleteItem}
-        classes={classes}
-      />
-      <ActionToolbar
-        createNewItem={createNewItem}
-        clearItems={clearItems}
-        classes={classes}
-      />
+      <Container className={classes.loggedInMainContainer}>
+        <TargetList
+          items={tripLocations}
+          removeFromTarget={removeFromTarget}
+          targetListRef={targetListRef}
+          clearItems={clearItems}
+          classes={classes}
+        />
+        <SourceList
+          items={items}
+          sendToTarget={sendToTarget}
+          showItemDetail={showItemDetail}
+          shouldShowGuide={shouldShowGuide}
+          createNewItem={createNewItem}
+          active={!isOverlayVisible}
+          classes={classes}
+        />
+        <ItemDetail
+          item={itemDetail}
+          onClose={onClose}
+          newItem={isShowingAddItem}
+          deleteItem={deleteItem}
+          classes={classes}
+        />
+      </Container>
     </Container>
   );
 }

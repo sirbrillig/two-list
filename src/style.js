@@ -4,13 +4,23 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => {
   return {
     loggedInRoot: {
-      maxWidth: '400px',
       backgroundColor: theme.palette.primary.dark,
       padding: '0',
       position: 'relative',
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
+      maxHeight: '100vh',
+    },
+    loggedInMainContainer: {
+      backgroundColor: theme.palette.primary.dark,
+      padding: '0',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      flex: 1,
+      maxHeight: '100%',
+      height: '100%',
       [theme.breakpoints.up('md')]: {
         flexDirection: 'row',
         maxWidth: '100%',
@@ -51,7 +61,7 @@ const useStyles = makeStyles(theme => {
       },
     },
     targetListBox: {
-      flex: 1.3,
+      flex: 1,
       display: 'flex',
       flexDirection: 'column',
       overflowY: 'hidden',
@@ -68,7 +78,7 @@ const useStyles = makeStyles(theme => {
       WebkitOverflowScrolling: 'touch',
     },
     sourceListBox: {
-      flex: 2.3,
+      flex: 2,
       overflowY: 'hidden',
       display: 'flex',
       position: 'relative',
