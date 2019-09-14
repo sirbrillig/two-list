@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 export default function TotalHeader({
   totalDistance,
   isLoading,
+  isError,
   clearItems,
   classes,
 }) {
@@ -15,7 +16,11 @@ export default function TotalHeader({
       <Icon fontSize="large" className={classes.totalHeaderIcon}>
         drive_eta
       </Icon>
-      {isLoading ? 'Loading...' : `${totalDistance} miles`}
+      <DistanceString
+        isLoading={isLoading}
+        isError={isError}
+        totalDistance={totalDistance}
+      />
     </React.Fragment>
   );
   const subheader = (
@@ -39,4 +44,14 @@ export default function TotalHeader({
       subheader={subheader}
     />
   );
+}
+
+function DistanceString({ isLoading, totalDistance, isError }) {
+  if (isLoading) {
+    return 'Loading...';
+  }
+  if (isError) {
+    return 'Error';
+  }
+  return `${totalDistance} miles`;
 }

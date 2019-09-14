@@ -169,6 +169,7 @@ export default function useVoyageurSync() {
 
 export function useDistance(locations) {
   const [isLoading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { showError } = useNotices();
   const { getTokenSilently } = useAuth0();
   const [totalMeters, setTotalMeters] = useState(0);
@@ -189,12 +190,16 @@ export function useDistance(locations) {
         distances.reduce((total, distance) => total + distance, 0),
       );
       setLoading(false);
+      setIsError(false);
     }
 
-    getDistances().catch(error => showError(error));
+    getDistances().catch(error => {
+      showError(error);
+      setIsError(true);
+    });
   }, [getTokenSilently, showError, locations]);
 
-  return { totalMeters, isLoading };
+  return { totalMeters, isLoading, isError };
 }
 
 function getAddressPairs(locations) {

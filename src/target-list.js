@@ -24,7 +24,7 @@ export default function TargetList({
   targetListRef,
   classes,
 }) {
-  const { totalMeters, isLoading } = useDistance(items);
+  const { totalMeters, isLoading, isError } = useDistance(items);
   const totalDistance = getMilesFromMeters(totalMeters);
   // We pad the bottom of the list to get the remove animation to look good
   const fakeItem = {
@@ -74,6 +74,7 @@ export default function TargetList({
       <TotalHeader
         totalDistance={totalDistance}
         isLoading={isLoading}
+        isError={isError}
         clearItems={clearItems}
         classes={classes}
       />
