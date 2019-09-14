@@ -202,5 +202,8 @@ function SourceListSearch({ value, onChange, classes }) {
 
 function doesItemMatchSearch(item, searchValue) {
   const { label = '', address = '' } = item;
-  return label.includes(searchValue) || address.includes(searchValue);
+  return (
+    label.toLowerCase().includes(searchValue.toLowerCase()) ||
+    address.toLowerCase().includes(searchValue.toLowerCase())
+  );
 }
