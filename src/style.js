@@ -58,6 +58,7 @@ const useStyles = makeStyles(theme => {
       flexDirection: 'column',
       borderBottomRightRadius: 0,
       borderBottomLeftRadius: 0,
+      height: '100%',
       [theme.breakpoints.up('md')]: {
         order: 2,
         borderBottomRightRadius: theme.shape.borderRadius,
