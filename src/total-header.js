@@ -10,16 +10,15 @@ export default function TotalHeader({
   clearItems,
   classes,
 }) {
-  const subText = isLoading ? 'Loading...' : `${totalDistance} miles`;
-  const subheader = (
+  const title = (
     <React.Fragment>
       <Icon fontSize="large" className={classes.totalHeaderIcon}>
         drive_eta
       </Icon>
-      {subText}
+      {isLoading ? 'Loading...' : `${totalDistance} miles`}
     </React.Fragment>
   );
-  const title = (
+  const subheader = (
     <React.Fragment>
       <IconButton
         classes={{ root: classes.totalHeaderButton }}
