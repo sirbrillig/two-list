@@ -44,22 +44,6 @@ const useStyles = makeStyles(theme => {
         display: 'none',
       },
     },
-    actionToolbar: {
-      height: 'auto',
-      zIndex: 2,
-      boxShadow: theme.shadows[2],
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-    },
-    actionToolbarButtonIcon: {
-      color: theme.palette.secondary.main,
-    },
-    actionToolbarButton: {
-      [theme.breakpoints.up('md')]: {
-        flex: 0,
-      },
-    },
     targetListBox: {
       flex: 1,
       display: 'flex',
@@ -201,12 +185,6 @@ const useStyles = makeStyles(theme => {
         width: '4em',
         order: 4,
       },
-    },
-    actionToolbarAdd: {
-      order: 1,
-    },
-    actionToolbarClear: {
-      order: 3,
     },
     searchIcon: {
       verticalAlign: 'sub',
