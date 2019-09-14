@@ -28,21 +28,10 @@ const useStyles = makeStyles(theme => {
     },
     mainToolbar: {
       backgroundColor: theme.palette.primary.main,
-      [theme.breakpoints.up('md')]: {
-        width: 'auto',
-      },
     },
     mainToolbarToolbar: {
       display: 'flex',
       justifyContent: 'space-between',
-      [theme.breakpoints.up('md')]: {
-        padding: 0,
-      },
-    },
-    mainToolbarTitle: {
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
     },
     targetListBox: {
       flex: 1,
