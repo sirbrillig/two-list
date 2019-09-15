@@ -1,5 +1,5 @@
 {
-  "title": "Two list experiments",
+  "title": "Voyageur",
   "devDependencies": {
     "eslint": "^6.2.2",
     "eslint-config-wpcalypso": "^4.0.1",
@@ -8,7 +8,7 @@
     "eslint-plugin-wpcalypso": "^4.1.0",
     "react-scripts": "latest"
   },
-  "description": "Two list experiments",
+  "description": "Calculate trip distances with multiple stops",
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.2.2",
     "@material-ui/core": "latest",

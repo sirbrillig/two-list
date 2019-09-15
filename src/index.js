@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import App from './app';
 import { Auth0Provider } from './react-auth0-wrapper';
 import { AUTH0_CLIENT_ID, AUTH0_DOMAIN, AUTH0_AUDIENCE } from './private-vars';
+import registerServiceWorker from './createServiceWorker';
+
+registerServiceWorker();
 
 // A function that routes the user to the right place
 // after login

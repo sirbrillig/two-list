@@ -30,6 +30,8 @@ const voyageurGrey = {
   contrastText: '#ffffff',
 };
 
+// This is required to be a separate component above the component which uses
+// `useStyles()` for the theme to work
 export default function AppContainer() {
   const theme = createMuiTheme({
     palette: { primary: voyageurBlue, secondary: voyageurGrey },
