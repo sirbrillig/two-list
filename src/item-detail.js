@@ -13,6 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import React, { useState, useEffect } from 'react';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Toolbar from '@material-ui/core/Toolbar';
 import useKeyCode, { clamp } from './use-key-code';
 import { useNotices } from './notices';
@@ -173,7 +175,7 @@ function useGoogleApi() {
     console.log('setGoogle');
     setGoogle(window.google);
   };
-  React.useEffect(() => {
+  useEffect(() => {
     if (!window.google) {
       const script = document.createElement(`script`);
       script.type = `text/javascript`;
@@ -181,7 +183,7 @@ function useGoogleApi() {
       script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places`;
       const headScript = document.getElementsByTagName(`script`)[0];
       headScript.parentNode.insertBefore(script, headScript);
-      script.addEventListener(`load`, onLoad);
+      script.addEventListener('load', onLoad);
       return () => script.removeEventListener(`load`, onLoad);
     } else onLoad();
   }, []);
@@ -190,18 +192,19 @@ function useGoogleApi() {
 
 function useGoogleAutocomplete({ google }) {
   const [service, setService] = useState();
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('setService');
     google && setService(new google.maps.places.AutocompleteService());
   }, [google]);
   return service;
 }
 
-function useCurrentGoogleLocation({ google }) {
+function useCurrentGoogleLocation({ google, enabled }) {
   const [location, setLocation] = useState();
   useEffect(() => {
     let isSubscribed = true;
     google &&
+      enabled &&
       navigator.geolocation.getCurrentPosition(position => {
         console.log('setLocation');
         isSubscribed &&
@@ -213,7 +216,7 @@ function useCurrentGoogleLocation({ google }) {
           );
       });
     return () => (isSubscribed = false);
-  }, [google]);
+  }, [google, enabled]);
   return location;
 }
 
@@ -237,9 +240,13 @@ function useAutocompleteValue({ search, service, location }) {
 function AddressAutosuggestInput({ value, onChange }) {
   const debouncedValue = useDebounce(value, 500);
   const [isTouched, setTouched] = useState();
+  const [isLocationEnabled, setLocationEnabled] = useState(false);
   const google = useGoogleApi();
   const service = useGoogleAutocomplete({ google });
-  const location = useCurrentGoogleLocation({ google });
+  const location = useCurrentGoogleLocation({
+    google,
+    enabled: isLocationEnabled,
+  });
   const { suggestions, clearSuggestions } = useAutocompleteValue({
     // only search if typing has started
     search: isTouched ? debouncedValue : '',
@@ -258,6 +265,7 @@ function AddressAutosuggestInput({ value, onChange }) {
     setTouched(false);
     clearSuggestions();
   };
+
   return (
     <React.Fragment>
       <TextField
@@ -277,6 +285,16 @@ function AddressAutosuggestInput({ value, onChange }) {
           onChange={onChoose}
         />
       )}
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isLocationEnabled}
+            onChange={() => setLocationEnabled(!isLocationEnabled)}
+            value="isLocationEnabled"
+          />
+        }
+        label="Use current location to improve autocomplete"
+      />
     </React.Fragment>
   );
 }
