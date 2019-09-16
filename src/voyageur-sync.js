@@ -45,6 +45,8 @@ function doArraysDiffer(array1, array2) {
 function voyageurSyncReducer(state, action) {
   console.log('reducer action', action);
   switch (action.type) {
+    case 'loadingItems':
+      return { ...state, serverItemsLoading: true };
     case 'setItems': {
       return {
         ...state,
@@ -56,6 +58,7 @@ function voyageurSyncReducer(state, action) {
       const clientItemIds = state.items.map(item => item.id);
       return {
         ...state,
+        serverItemsLoading: false,
         serverItems: action.payload,
         items: doArraysDiffer(serverItemIds, clientItemIds)
           ? action.payload
@@ -127,6 +130,7 @@ async function syncItemsToServer({ getTokenSilently, dispatch, state }) {
 
 async function fetchItemsFromServer({ getTokenSilently, dispatch }) {
   console.log('fetching items from server');
+  dispatch({ type: 'loadingItems' });
   const token = await getTokenSilently();
   const locations = await listLocations(token);
   dispatch({
@@ -139,6 +143,7 @@ export default function useVoyageurSync() {
   const [state, dispatch] = useReducer(voyageurSyncReducer, {
     items: [],
     serverItems: [],
+    serverItemsLoading: false,
   });
   console.log('voyageur sync', state);
   const { showError } = useNotices();
@@ -164,7 +169,7 @@ export default function useVoyageurSync() {
     }).catch(error => showError(error));
   }, [getTokenSilently, showError, state]);
 
-  return [items, setItems];
+  return [items, setItems, state.serverItemsLoading];
 }
 
 export function useDistance(locations) {

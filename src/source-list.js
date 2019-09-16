@@ -18,6 +18,7 @@ export default function SourceList({
   showItemDetail,
   shouldShowGuide,
   createNewItem,
+  isLoading,
   active,
   classes,
 }) {
@@ -84,6 +85,7 @@ export default function SourceList({
   const itemsWithSearch = shouldShowGuide
     ? [searchItem, ...itemElements, guideElement]
     : [searchItem, ...itemElements];
+
   return (
     <Card elevation={1} className={classes.sourceListBox}>
       <CardHeader
@@ -94,12 +96,36 @@ export default function SourceList({
         subheader={addButton}
       />
       <Divider />
-      {items.length ? (
-        <List className={classes.sourceList}>{itemsWithSearch}</List>
-      ) : (
-        <EmptyLocationsList classes={classes} />
-      )}
+      <LocationList
+        classes={classes}
+        itemsWithSearch={itemsWithSearch}
+        items={items}
+        isLoading={isLoading}
+      />
     </Card>
+  );
+}
+
+function LocationList({ classes, itemsWithSearch, items, isLoading }) {
+  if (isLoading) {
+    return <SourceListLoading classes={classes} />;
+  }
+  return items.length ? (
+    <List className={classes.sourceList}>{itemsWithSearch}</List>
+  ) : (
+    <EmptyLocationsList classes={classes} />
+  );
+}
+
+function SourceListLoading({ classes }) {
+  return (
+    <div className={classes.emptyLocationsList}>
+      <Icon fontSize="large" className={classes.emptyLocationsListIcon}>
+        emoji_transportation
+      </Icon>
+      <div className={classes.emptyLocationsListTitle}>Loading...</div>
+      <p>Just a moment.</p>
+    </div>
   );
 }
 

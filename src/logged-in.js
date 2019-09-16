@@ -26,7 +26,7 @@ function useScrollToItem(tripLocations, targetListRef) {
 }
 
 export default function LoggedIn({ classes, logOut }) {
-  const [items, setItems] = useVoyageurSync();
+  const [items, setItems, isLoading] = useVoyageurSync();
 
   const [tripLocations, setTripLocations] = useLocalStorageState(
     [],
@@ -99,6 +99,7 @@ export default function LoggedIn({ classes, logOut }) {
           classes={classes}
         />
         <SourceList
+          isLoading={isLoading}
           items={items}
           sendToTarget={sendToTarget}
           showItemDetail={showItemDetail}
