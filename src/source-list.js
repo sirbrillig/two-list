@@ -14,6 +14,7 @@ import useKeyCode, { clamp } from './use-key-code';
 
 export default function SourceList({
   items,
+  sourceListRef,
   sendToTarget,
   showItemDetail,
   shouldShowGuide,
@@ -97,6 +98,7 @@ export default function SourceList({
       />
       <Divider />
       <LocationList
+        ref={sourceListRef}
         classes={classes}
         itemsWithSearch={itemsWithSearch}
         items={items}
@@ -106,12 +108,14 @@ export default function SourceList({
   );
 }
 
-function LocationList({ classes, itemsWithSearch, items, isLoading }) {
+function LocationList({ classes, itemsWithSearch, items, isLoading, ref }) {
   if (isLoading) {
     return <SourceListLoading classes={classes} />;
   }
   return items.length ? (
-    <List className={classes.sourceList}>{itemsWithSearch}</List>
+    <List ref={ref} className={classes.sourceList}>
+      {itemsWithSearch}
+    </List>
   ) : (
     <EmptyLocationsList classes={classes} />
   );

@@ -7,23 +7,7 @@ import ItemDetail from './item-detail';
 import MainToolbar from './main-toolbar';
 import useVoyageurSync from './voyageur-sync';
 import useLocalStorageState from './local-storage';
-
-function useScrollToItem(tripLocations, targetListRef) {
-  const prevSavedItems = useRef(tripLocations);
-  useEffect(() => {
-    if (!targetListRef.current) {
-      return;
-    }
-    if (tripLocations.length <= prevSavedItems.current.length) {
-      return;
-    }
-    prevSavedItems.current = tripLocations;
-    targetListRef.current.lastElementChild.scrollIntoView({
-      block: 'start',
-      behavior: 'smooth',
-    });
-  }, [targetListRef, tripLocations]);
-}
+import useScrollToItem from './scroll-to-item';
 
 export default function LoggedIn({ classes, logOut }) {
   const [items, setItems, isLoading] = useVoyageurSync();
@@ -36,6 +20,8 @@ export default function LoggedIn({ classes, logOut }) {
   const [isShowingAddItem, setIsShowingAddItem] = useState(false);
   const targetListRef = useRef();
   useScrollToItem(tripLocations, targetListRef);
+  const sourceListRef = useRef();
+  useScrollToItem(items, sourceListRef);
   const [shouldShowGuide, setShowGuide] = useLocalStorageState(
     true,
     'voyageurSeenGuide',
@@ -101,6 +87,7 @@ export default function LoggedIn({ classes, logOut }) {
         <SourceList
           isLoading={isLoading}
           items={items}
+          sourceListRef={sourceListRef}
           sendToTarget={sendToTarget}
           showItemDetail={showItemDetail}
           shouldShowGuide={shouldShowGuide}
