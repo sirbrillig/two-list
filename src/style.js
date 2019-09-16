@@ -133,13 +133,13 @@ const useStyles = makeStyles(theme => {
       padding: '0',
       color: theme.palette.primary.contrastText,
     },
-    suggestion: {
-      display: 'block',
+    addressFieldContainer: {
+      position: 'relative',
     },
-    suggestionsList: {
-      margin: 0,
-      padding: 0,
-      listStyleType: 'none',
+    suggestionList: {
+      position: 'absolute',
+      zIndex: 10,
+      width: '100%',
     },
     container: {
       position: 'relative',

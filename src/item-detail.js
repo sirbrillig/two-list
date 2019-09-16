@@ -48,7 +48,6 @@ export default function ItemDetail({
 function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
   const { showError } = useNotices();
   const [address, setAddress] = useState(item.address || '');
-  const setName = event => setItemName(event.target.value);
   const [itemName, setItemName] = useState(item.label);
   useEffect(() => {
     setItemName(item.label);
@@ -98,22 +97,37 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
       </AppBar>
       <DialogContent>
         <div>
-          <TextField
-            id="item-name"
-            label="Name"
-            margin="normal"
-            fullWidth
-            value={itemName}
-            onChange={setName}
-            error={!itemName}
-          />
+          <NameField value={itemName} onChange={setItemName} />
         </div>
-        <div>
-          <AddressAutosuggestInput value={address} onChange={setAddress} />
+        <div className={classes.addressFieldContainer}>
+          <AddressAutosuggestInput
+            value={address}
+            onChange={setAddress}
+            classes={classes}
+          />
         </div>
         <PoweredByGoogle classes={classes} />
       </DialogContent>
     </React.Fragment>
+  );
+}
+
+function NameField({ value, onChange }) {
+  const [isTouched, setTouched] = useState(false);
+  const handleChange = event => {
+    setTouched(true);
+    onChange(event.target.value);
+  };
+  return (
+    <TextField
+      id="item-name"
+      label="Name"
+      margin="normal"
+      fullWidth
+      value={value}
+      onChange={handleChange}
+      error={isTouched && !value}
+    />
   );
 }
 
@@ -237,7 +251,7 @@ function useAutocompleteValue({ search, service, location }) {
   return { suggestions, clearSuggestions };
 }
 
-function AddressAutosuggestInput({ value, onChange }) {
+function AddressAutosuggestInput({ value, classes, onChange }) {
   const debouncedValue = useDebounce(value, 500);
   const [isTouched, setTouched] = useState();
   const [isLocationEnabled, setLocationEnabled] = useState(false);
@@ -276,13 +290,14 @@ function AddressAutosuggestInput({ value, onChange }) {
         value={value}
         onChange={onType}
         autoComplete="off"
-        error={!value}
+        error={isTouched && !value}
       />
       {suggestions && (
         <SuggestionList
           suggestions={suggestions}
           clearSuggestions={clearSuggestions}
           onChange={onChoose}
+          classes={classes}
         />
       )}
       <FormControlLabel
@@ -299,7 +314,7 @@ function AddressAutosuggestInput({ value, onChange }) {
   );
 }
 
-function SuggestionList({ suggestions, onChange }) {
+function SuggestionList({ suggestions, onChange, classes }) {
   const [highlighted, setHighlighted] = useState(0);
   const moveDown = useKeyCode(40);
   const moveUp = useKeyCode(38);
@@ -315,7 +330,7 @@ function SuggestionList({ suggestions, onChange }) {
     suggestions[highlighted] && onChange(suggestions[highlighted].label);
   }
   return (
-    <Paper square>
+    <Paper square className={classes.suggestionList}>
       {suggestions.map((suggestion, index) => (
         <SuggestionItem
           key={index}
