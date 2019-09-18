@@ -47,6 +47,8 @@ function voyageurSyncReducer(state, action) {
   switch (action.type) {
     case 'loadingItems':
       return { ...state, serverItemsLoading: true };
+    case 'errorLoading':
+      return { ...state, serverItemsError: true };
     case 'setItems': {
       return {
         ...state,
@@ -59,6 +61,7 @@ function voyageurSyncReducer(state, action) {
       return {
         ...state,
         serverItemsLoading: false,
+        serverItemsError: false,
         serverItems: action.payload,
         items: doArraysDiffer(serverItemIds, clientItemIds)
           ? action.payload
@@ -144,6 +147,7 @@ export default function useVoyageurSync() {
     items: [],
     serverItems: [],
     serverItemsLoading: false,
+    serverItemsError: false,
   });
   console.log('voyageur sync', state);
   const { showError } = useNotices();
@@ -158,7 +162,13 @@ export default function useVoyageurSync() {
     fetchItemsFromServer({
       getTokenSilently,
       dispatch,
-    }).catch(error => showError(error));
+    }).catch(error => {
+      dispatch({ type: 'errorLoading' });
+      showError(
+        "I'm having trouble connecting to the server. Try reloading the page.",
+        error,
+      );
+    });
   }, [getTokenSilently, showError]);
 
   useEffect(() => {
@@ -166,10 +176,16 @@ export default function useVoyageurSync() {
       getTokenSilently,
       dispatch,
       state,
-    }).catch(error => showError(error));
+    }).catch(error => {
+      dispatch({ type: 'errorLoading' });
+      showError(
+        "I'm having trouble connecting to the server. Try reloading the page.",
+        error,
+      );
+    });
   }, [getTokenSilently, showError, state]);
 
-  return [items, setItems, state.serverItemsLoading];
+  return [items, setItems, state.serverItemsLoading, state.serverItemsError];
 }
 
 export function useDistance(locations) {
@@ -199,7 +215,10 @@ export function useDistance(locations) {
     }
 
     getDistances().catch(error => {
-      showError(error);
+      showError(
+        "I'm having trouble connecting to the server. Try reloading the page.",
+        error,
+      );
       setIsError(true);
     });
   }, [getTokenSilently, showError, locations]);

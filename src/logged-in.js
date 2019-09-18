@@ -10,7 +10,7 @@ import useLocalStorageState from './local-storage';
 import useScrollToItem from './scroll-to-item';
 
 export default function LoggedIn({ classes, logOut }) {
-  const [items, setItems, isLoading] = useVoyageurSync();
+  const [items, setItems, isLoading, isError] = useVoyageurSync();
 
   const [tripLocations, setTripLocations] = useLocalStorageState(
     [],
@@ -86,6 +86,7 @@ export default function LoggedIn({ classes, logOut }) {
         />
         <SourceList
           isLoading={isLoading}
+          isError={isError}
           items={items}
           sourceListRef={sourceListRef}
           sendToTarget={sendToTarget}

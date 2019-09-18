@@ -20,6 +20,7 @@ export default function SourceList({
   shouldShowGuide,
   createNewItem,
   isLoading,
+  isError,
   active,
   classes,
 }) {
@@ -103,12 +104,23 @@ export default function SourceList({
         itemsWithSearch={itemsWithSearch}
         items={items}
         isLoading={isLoading}
+        isError={isError}
       />
     </Card>
   );
 }
 
-function LocationList({ classes, itemsWithSearch, items, isLoading, ref }) {
+function LocationList({
+  classes,
+  itemsWithSearch,
+  items,
+  isLoading,
+  isError,
+  ref,
+}) {
+  if (isError) {
+    return <SourceListError classes={classes} />;
+  }
   if (isLoading) {
     return <SourceListLoading classes={classes} />;
   }
@@ -129,6 +141,18 @@ function SourceListLoading({ classes }) {
       </Icon>
       <div className={classes.emptyLocationsListTitle}>Loading...</div>
       <p>Just a moment.</p>
+    </div>
+  );
+}
+
+function SourceListError({ classes }) {
+  return (
+    <div className={classes.emptyLocationsList}>
+      <Icon fontSize="large" className={classes.emptyLocationsListIcon}>
+        emoji_transportation
+      </Icon>
+      <div className={classes.emptyLocationsListTitle}>Sorry</div>
+      <p>I wasn't able to connect to the server. Try reloading the page.</p>
     </div>
   );
 }
