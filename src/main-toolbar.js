@@ -40,6 +40,8 @@ export default function MainToolbar({ classes, logOut }) {
 }
 
 function UserMenu({ targetRef, open, onClose, logOut }) {
+  // FIXME: log out needs to return to the log in page
+  // FIXME: Profile needs to do something
   return (
     <Menu
       id="menu-appbar"

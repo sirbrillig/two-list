@@ -21,7 +21,7 @@ export default function LoggedIn({ classes, logOut }) {
   const targetListRef = useRef();
   useScrollToItem(tripLocations, targetListRef);
   const sourceListRef = useRef();
-  useScrollToItem(items, sourceListRef);
+  useScrollToItem(items, sourceListRef); // FIXME: make this work
   const [shouldShowGuide, setShowGuide] = useLocalStorageState(
     true,
     'voyageurSeenGuide',
