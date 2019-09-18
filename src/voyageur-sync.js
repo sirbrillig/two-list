@@ -10,6 +10,90 @@ import {
 import { useAuth0 } from './react-auth0-wrapper';
 import { useNotices } from './notices';
 
+export default function useVoyageurSync() {
+  const [state, dispatch] = useReducer(voyageurSyncReducer, {
+    items: [],
+    serverItems: [],
+    serverItemsLoading: false,
+    serverItemsError: false,
+  });
+  console.log('voyageur sync', state);
+  const { showError } = useNotices();
+  const { getTokenSilently } = useAuth0();
+
+  const { items } = state;
+  const setItems = newItems =>
+    dispatch({ type: 'setItems', payload: newItems });
+
+  // Initial fetch
+  useEffect(() => {
+    fetchItemsFromServer({
+      getTokenSilently,
+      dispatch,
+    }).catch(error => {
+      dispatch({ type: 'errorLoading' });
+      showError(
+        "I'm having trouble connecting to the server. Try reloading the page.",
+        error,
+      );
+    });
+  }, [getTokenSilently, showError]);
+
+  useEffect(() => {
+    syncItemsToServer({
+      getTokenSilently,
+      dispatch,
+      state,
+    }).catch(error => {
+      dispatch({ type: 'errorLoading' });
+      showError(
+        "I'm having trouble connecting to the server. Try reloading the page.",
+        error,
+      );
+    });
+  }, [getTokenSilently, showError, state]);
+
+  return [items, setItems, state.serverItemsLoading, state.serverItemsError];
+}
+
+export function useDistance(locations) {
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const { showError } = useNotices();
+  const { getTokenSilently } = useAuth0();
+  const [totalMeters, setTotalMeters] = useState(0);
+  console.log('getting distance', locations);
+
+  useEffect(() => {
+    async function getDistances() {
+      setLoading(true);
+      console.log('fetching distance', locations);
+      const token = await getTokenSilently();
+      const distances = await Promise.all(
+        getAddressPairs(locations).map(({ start, dest }) => {
+          return getDistanceBetween(token, start, dest);
+        }),
+      );
+      console.log('distances calculated');
+      setTotalMeters(
+        distances.reduce((total, distance) => total + distance, 0),
+      );
+      setLoading(false);
+      setIsError(false);
+    }
+
+    getDistances().catch(error => {
+      showError(
+        "I'm having trouble connecting to the server. Try reloading the page.",
+        error,
+      );
+      setIsError(true);
+    });
+  }, [getTokenSilently, showError, locations]);
+
+  return { totalMeters, isLoading, isError };
+}
+
 function translateRemoteItems(items) {
   return items.map(item => ({
     label: item.name,
@@ -140,90 +224,6 @@ async function fetchItemsFromServer({ getTokenSilently, dispatch }) {
     type: 'setServerItems',
     payload: translateRemoteItems(locations),
   });
-}
-
-export default function useVoyageurSync() {
-  const [state, dispatch] = useReducer(voyageurSyncReducer, {
-    items: [],
-    serverItems: [],
-    serverItemsLoading: false,
-    serverItemsError: false,
-  });
-  console.log('voyageur sync', state);
-  const { showError } = useNotices();
-  const { getTokenSilently } = useAuth0();
-
-  const { items } = state;
-  const setItems = newItems =>
-    dispatch({ type: 'setItems', payload: newItems });
-
-  // Initial fetch
-  useEffect(() => {
-    fetchItemsFromServer({
-      getTokenSilently,
-      dispatch,
-    }).catch(error => {
-      dispatch({ type: 'errorLoading' });
-      showError(
-        "I'm having trouble connecting to the server. Try reloading the page.",
-        error,
-      );
-    });
-  }, [getTokenSilently, showError]);
-
-  useEffect(() => {
-    syncItemsToServer({
-      getTokenSilently,
-      dispatch,
-      state,
-    }).catch(error => {
-      dispatch({ type: 'errorLoading' });
-      showError(
-        "I'm having trouble connecting to the server. Try reloading the page.",
-        error,
-      );
-    });
-  }, [getTokenSilently, showError, state]);
-
-  return [items, setItems, state.serverItemsLoading, state.serverItemsError];
-}
-
-export function useDistance(locations) {
-  const [isLoading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const { showError } = useNotices();
-  const { getTokenSilently } = useAuth0();
-  const [totalMeters, setTotalMeters] = useState(0);
-  console.log('getting distance', locations);
-
-  useEffect(() => {
-    async function getDistances() {
-      setLoading(true);
-      console.log('fetching distance', locations);
-      const token = await getTokenSilently();
-      const distances = await Promise.all(
-        getAddressPairs(locations).map(({ start, dest }) => {
-          return getDistanceBetween(token, start, dest);
-        }),
-      );
-      console.log('distances calculated');
-      setTotalMeters(
-        distances.reduce((total, distance) => total + distance, 0),
-      );
-      setLoading(false);
-      setIsError(false);
-    }
-
-    getDistances().catch(error => {
-      showError(
-        "I'm having trouble connecting to the server. Try reloading the page.",
-        error,
-      );
-      setIsError(true);
-    });
-  }, [getTokenSilently, showError, locations]);
-
-  return { totalMeters, isLoading, isError };
 }
 
 function getAddressPairs(locations) {
