@@ -48,7 +48,7 @@ function voyageurSyncReducer(state, action) {
     case 'loadingItems':
       return { ...state, serverItemsLoading: true };
     case 'errorLoading':
-      return { ...state, serverItemsError: true };
+      return { ...state, serverItemsLoading: false, serverItemsError: true };
     case 'setItems': {
       return {
         ...state,
