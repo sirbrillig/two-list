@@ -40,7 +40,6 @@ export default function MainToolbar({ classes, logOut }) {
 }
 
 function UserMenu({ targetRef, open, onClose, logOut }) {
-  // FIXME: Profile needs to do something
   return (
     <Menu
       id="menu-appbar"
@@ -56,7 +55,6 @@ function UserMenu({ targetRef, open, onClose, logOut }) {
       }}
       open={open}
       onClose={onClose}>
-      <MenuItem onClick={onClose}>Profile</MenuItem>
       <MenuItem onClick={logOut}>Log out</MenuItem>
     </Menu>
   );
