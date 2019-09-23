@@ -31,6 +31,10 @@ export default function LoggedIn({ classes, logOut }) {
       setShowGuide(false);
     }
   }, [setShowGuide, tripLocations]);
+  const [isLocationEnabled, setLocationEnabled] = useLocalStorageState(
+    false,
+    'voyageurIsLocationEnabled',
+  );
 
   const sendToTarget = item => {
     const targetItem = { ...item, targetItemId: uniqueId() };
@@ -101,6 +105,8 @@ export default function LoggedIn({ classes, logOut }) {
           onClose={onClose}
           newItem={isShowingAddItem}
           deleteItem={deleteItem}
+          isLocationEnabled={isLocationEnabled}
+          setLocationEnabled={setLocationEnabled}
           classes={classes}
         />
       </Container>

@@ -26,6 +26,8 @@ export default function ItemDetail({
   onClose,
   newItem,
   deleteItem,
+  isLocationEnabled,
+  setLocationEnabled,
   classes,
 }) {
   return (
@@ -40,12 +42,22 @@ export default function ItemDetail({
         newItem={newItem}
         classes={classes}
         deleteItem={deleteItem}
+        isLocationEnabled={isLocationEnabled}
+        setLocationEnabled={setLocationEnabled}
       />
     </Dialog>
   );
 }
 
-function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
+function ItemDetailContent({
+  item,
+  onClose,
+  newItem,
+  deleteItem,
+  isLocationEnabled,
+  setLocationEnabled,
+  classes,
+}) {
   const { showError } = useNotices();
   const [address, setAddress] = useState(item.address || '');
   const [itemName, setItemName] = useState(item.label);
@@ -104,6 +116,8 @@ function ItemDetailContent({ item, onClose, newItem, deleteItem, classes }) {
             value={address}
             onChange={setAddress}
             classes={classes}
+            isLocationEnabled={isLocationEnabled}
+            setLocationEnabled={setLocationEnabled}
           />
         </div>
         <PoweredByGoogle classes={classes} />
@@ -251,10 +265,15 @@ function useAutocompleteValue({ search, service, location }) {
   return { suggestions, clearSuggestions };
 }
 
-function AddressAutosuggestInput({ value, classes, onChange }) {
+function AddressAutosuggestInput({
+  value,
+  classes,
+  onChange,
+  isLocationEnabled,
+  setLocationEnabled,
+}) {
   const debouncedValue = useDebounce(value, 500);
   const [isTouched, setTouched] = useState();
-  const [isLocationEnabled, setLocationEnabled] = useState(false);
   const google = useGoogleApi();
   const service = useGoogleAutocomplete({ google });
   const location = useCurrentGoogleLocation({
