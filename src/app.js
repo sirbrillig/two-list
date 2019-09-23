@@ -92,7 +92,12 @@ function MainArea({
     );
   }
   if (isAuthenticated) {
-    return <LoggedIn classes={classes} logOut={() => logout()} />;
+    return (
+      <LoggedIn
+        classes={classes}
+        logOut={() => logout({ returnTo: window.location.href })}
+      />
+    );
   }
   return (
     <LoggedOut
