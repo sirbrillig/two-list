@@ -6,6 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -61,13 +63,19 @@ function ItemDetailContent({
   const { showError } = useNotices();
   const [address, setAddress] = useState(item.address || '');
   const [itemName, setItemName] = useState(item.label);
+  const [isShowingDeleteConfirm, setIsShowingDeleteConfirm] = useState(false);
   useEffect(() => {
     setItemName(item.label);
   }, [item]);
 
   const confirmDelete = () => {
-    // TODO: show "are you sure?"
-    deleteItem();
+    setIsShowingDeleteConfirm(true);
+  };
+  const handleCloseDeleteDialog = action => {
+    setIsShowingDeleteConfirm(false);
+    if (action === 'delete') {
+      deleteItem();
+    }
   };
   const saveChanges = () => {
     if (!itemName || !address) {
@@ -122,7 +130,38 @@ function ItemDetailContent({
         </div>
         <PoweredByGoogle classes={classes} />
       </DialogContent>
+      <ConfirmDeleteDialog
+        open={isShowingDeleteConfirm}
+        handleClose={handleCloseDeleteDialog}
+      />
     </React.Fragment>
+  );
+}
+
+function ConfirmDeleteDialog({ open, handleClose }) {
+  return (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description">
+      <DialogTitle id="alert-dialog-title">
+        {'Are you sure you want to delete this location?'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Are you sure you want to delete this location?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => handleClose()} color="primary">
+          No, Keep it
+        </Button>
+        <Button onClick={() => handleClose('delete')} color="primary" autoFocus>
+          Yes, Delete it
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
 
