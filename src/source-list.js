@@ -149,10 +149,10 @@ function SourceListError({ classes }) {
   return (
     <div className={classes.emptyLocationsList}>
       <Icon fontSize="large" className={classes.emptyLocationsListIcon}>
-        emoji_transportation
+        error_outline
       </Icon>
       <div className={classes.emptyLocationsListTitle}>Sorry</div>
-      <p>I wasn't able to connect to the server. Try reloading the page.</p>
+      <p>{"I wasn't able to connect to the server. Try reloading the page."}</p>
     </div>
   );
 }
