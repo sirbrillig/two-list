@@ -150,15 +150,17 @@ function ConfirmDeleteDialog({ open, handleClose }) {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this location?
+          {
+            "Deleted locations cannot be restored (you'll have to add it again if you want it back). Deleting a location that's already in your trip will not remove the location from that trip."
+          }
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={() => handleClose()} color="primary">
-          No, Keep it
+          Keep it
         </Button>
         <Button onClick={() => handleClose('delete')} color="primary" autoFocus>
-          Yes, Delete it
+          Delete it
         </Button>
       </DialogActions>
     </Dialog>
