@@ -1,5 +1,6 @@
 {
   "title": "Voyageur",
+  "homepage": "https://voyageur.blue",
   "devDependencies": {
     "eslint": "^6.2.2",
     "eslint-config-wpcalypso": "^4.0.1",
